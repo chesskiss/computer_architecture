@@ -1,0 +1,37 @@
+2023-10-26 13:10:26.366 [info] Extension host with pid 23121 started
+2023-10-26 13:10:26.371 [error] Error: EEXIST: file already exists, open '/home/ac2842/.vscode-server/data/User/workspaceStorage/56a11434395a5b329ef6050d8c4fd0b4/vscode.lock'
+2023-10-26 13:10:26.380 [info] Lock '/home/ac2842/.vscode-server/data/User/workspaceStorage/56a11434395a5b329ef6050d8c4fd0b4/vscode.lock': Could not acquire lock, checking if the file is stale.
+2023-10-26 13:10:26.384 [info] Lock '/home/ac2842/.vscode-server/data/User/workspaceStorage/56a11434395a5b329ef6050d8c4fd0b4/vscode.lock': The pid 50719 appears to be gone.
+2023-10-26 13:10:26.384 [info] Lock '/home/ac2842/.vscode-server/data/User/workspaceStorage/56a11434395a5b329ef6050d8c4fd0b4/vscode.lock': Deleting a stale lock.
+2023-10-26 13:10:26.401 [info] Lock '/home/ac2842/.vscode-server/data/User/workspaceStorage/56a11434395a5b329ef6050d8c4fd0b4/vscode.lock': Lock acquired.
+2023-10-26 13:10:26.790 [info] ExtensionService#_doActivateExtension vscode.git-base, startup: true, activationEvent: '*', root cause: vscode.git
+2023-10-26 13:10:26.895 [info] ExtensionService#_doActivateExtension vscode.git, startup: true, activationEvent: '*'
+2023-10-26 13:10:26.895 [info] ExtensionService#_doActivateExtension vscode.github, startup: true, activationEvent: '*'
+2023-10-26 13:10:27.198 [info] ExtensionService#_doActivateExtension ms-vscode.makefile-tools, startup: true, activationEvent: 'workspaceContains:**/makefile,**/Makefile,**/GNUmakefile'
+2023-10-26 13:10:27.550 [warning] [Decorations] CAPPING events from decorations provider vscode.git 1707
+2023-10-26 13:10:27.895 [warning] [Decorations] CAPPING events from decorations provider vscode.git 1707
+2023-10-26 13:10:28.506 [info] Eager extensions activated
+2023-10-26 13:10:28.507 [info] ExtensionService#_doActivateExtension vscode.debug-auto-launch, startup: false, activationEvent: 'onStartupFinished'
+2023-10-26 13:10:28.507 [info] ExtensionService#_doActivateExtension vscode.merge-conflict, startup: false, activationEvent: 'onStartupFinished'
+2023-10-26 13:10:39.165 [info] ExtensionService#_doActivateExtension vscode.npm, startup: false, activationEvent: 'onTerminalQuickFixRequest:ms-vscode.npm-command'
+2023-10-26 13:10:39.171 [error] Activating extension vscode.npm failed due to an error:
+2023-10-26 13:10:39.171 [error] Error: Cannot find module '/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/extensions/npm/dist/npmMain'
+Require stack:
+- /home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/loader.js
+- /home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/bootstrap-amd.js
+- /home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/bootstrap-fork.js
+	at Module._resolveFilename (node:internal/modules/cjs/loader:1075:15)
+	at Module._load (node:internal/modules/cjs/loader:920:27)
+	at u._load (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:154:5631)
+	at c._load (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:151:29196)
+	at t._load (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:118:35261)
+	at Module.require (node:internal/modules/cjs/loader:1141:19)
+	at require (node:internal/modules/cjs/helpers:110:18)
+	at Function.i [as __$__nodeRequire] (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/loader.js:5:98)
+	at s.vb (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:151:30375)
+	at async Promise.all (index 0)
+2023-10-26 13:11:04.418 [error] Error: ENOENT: no such file or directory, open '/home/ac2842/.vscode-server/data/User/workspaceStorage/56a11434395a5b329ef6050d8c4fd0b4/vscode.lock'
+2023-10-26 13:11:04.419 [info] Lock '/home/ac2842/.vscode-server/data/User/workspaceStorage/56a11434395a5b329ef6050d8c4fd0b4/vscode.lock': The lock was lost unexpectedly.
+2023-10-26 13:11:04.419 [error] Error: ENOENT: no such file or directory, utime '/home/ac2842/.vscode-server/data/User/workspaceStorage/56a11434395a5b329ef6050d8c4fd0b4/vscode.lock'
+2023-10-26 13:11:04.419 [info] Lock '/home/ac2842/.vscode-server/data/User/workspaceStorage/56a11434395a5b329ef6050d8c4fd0b4/vscode.lock': Could not update mtime.
+2023-10-26 13:11:20.728 [warning] [Decorations] CAPPING events from decorations provider vscode.git 10439
