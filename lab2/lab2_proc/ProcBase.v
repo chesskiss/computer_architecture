@@ -10,8 +10,8 @@
 `include "vc/trace.v"
 
 `include "tinyrv2_encoding.v"
-`include "ProcBaseCtrl.v"
 `include "ProcBaseDpath.v"
+`include "ProcBaseCtrl.v"
 `include "DropUnit.v"
 
 module lab2_proc_ProcBase
@@ -58,7 +58,7 @@ module lab2_proc_ProcBase
   input  logic         dmem_respstream_val,
   output logic         dmem_respstream_rdy,
 
-  // extra ports; note that core_id is an input port rather than a
+  // extra.p note that core_id is an input port rather than a
   // parameter so that the module only needs to be compiled once. If it
   // were a parameter, each core would be compiled separately.
 

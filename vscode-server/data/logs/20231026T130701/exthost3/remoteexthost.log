@@ -35,3 +35,129 @@ Require stack:
 2023-10-26 13:11:04.419 [error] Error: ENOENT: no such file or directory, utime '/home/ac2842/.vscode-server/data/User/workspaceStorage/56a11434395a5b329ef6050d8c4fd0b4/vscode.lock'
 2023-10-26 13:11:04.419 [info] Lock '/home/ac2842/.vscode-server/data/User/workspaceStorage/56a11434395a5b329ef6050d8c4fd0b4/vscode.lock': Could not update mtime.
 2023-10-26 13:11:20.728 [warning] [Decorations] CAPPING events from decorations provider vscode.git 10439
+2023-10-26 13:15:28.457 [info] ExtensionService#_doActivateExtension vscode.emmet, startup: false, activationEvent: 'onLanguage'
+2023-10-26 13:15:28.460 [error] Activating extension vscode.emmet failed due to an error:
+2023-10-26 13:15:28.460 [error] Error: Cannot find module '/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/extensions/emmet/dist/node/emmetNodeMain'
+Require stack:
+- /home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/loader.js
+- /home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/bootstrap-amd.js
+- /home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/bootstrap-fork.js
+	at Module._resolveFilename (node:internal/modules/cjs/loader:1075:15)
+	at Module._load (node:internal/modules/cjs/loader:920:27)
+	at u._load (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:154:5631)
+	at c._load (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:151:29196)
+	at t._load (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:118:35261)
+	at Module.require (node:internal/modules/cjs/loader:1141:19)
+	at require (node:internal/modules/cjs/helpers:110:18)
+	at Function.i [as __$__nodeRequire] (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/loader.js:5:98)
+	at s.vb (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:151:30375)
+	at async Promise.all (index 0)
+2023-10-26 13:18:26.193 [info] ExtensionService#_doActivateExtension vscode.json-language-features, startup: false, activationEvent: 'onLanguage:jsonc'
+2023-10-26 13:18:26.195 [info] ExtensionService#_doActivateExtension vscode.typescript-language-features, startup: false, activationEvent: 'onLanguage:jsonc'
+2023-10-26 13:18:26.198 [error] Activating extension vscode.json-language-features failed due to an error:
+2023-10-26 13:18:26.198 [error] Error: Cannot find module '/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/extensions/json-language-features/client/dist/node/jsonClientMain'
+Require stack:
+- /home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/loader.js
+- /home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/bootstrap-amd.js
+- /home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/bootstrap-fork.js
+	at Module._resolveFilename (node:internal/modules/cjs/loader:1075:15)
+	at Module._load (node:internal/modules/cjs/loader:920:27)
+	at u._load (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:154:5631)
+	at c._load (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:151:29196)
+	at t._load (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:118:35261)
+	at Module.require (node:internal/modules/cjs/loader:1141:19)
+	at require (node:internal/modules/cjs/helpers:110:18)
+	at Function.i [as __$__nodeRequire] (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/loader.js:5:98)
+	at s.vb (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:151:30375)
+	at async Promise.all (index 0)
+2023-10-26 13:18:26.199 [error] Activating extension vscode.typescript-language-features failed due to an error:
+2023-10-26 13:18:26.199 [error] Error: Cannot find module '/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/extensions/typescript-language-features/dist/extension'
+Require stack:
+- /home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/loader.js
+- /home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/bootstrap-amd.js
+- /home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/bootstrap-fork.js
+	at Module._resolveFilename (node:internal/modules/cjs/loader:1075:15)
+	at Module._load (node:internal/modules/cjs/loader:920:27)
+	at u._load (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:154:5631)
+	at c._load (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:151:29196)
+	at t._load (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:118:35261)
+	at Module.require (node:internal/modules/cjs/loader:1141:19)
+	at require (node:internal/modules/cjs/helpers:110:18)
+	at Function.i [as __$__nodeRequire] (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/loader.js:5:98)
+	at s.vb (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:151:30375)
+	at async Promise.all (index 0)
+2023-10-26 16:32:21.250 [info] Extension host terminating: renderer disconnected for too long (1)
+2023-10-26 16:32:21.253 [info] Lock '/home/ac2842/.vscode-server/data/User/workspaceStorage/56a11434395a5b329ef6050d8c4fd0b4/vscode.lock': Marking the lockfile as scheduled to be released in 6000 ms.
+2023-10-26 16:32:21.306 [error] Canceled: Canceled
+	at new m (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:126:57216)
+	at i.U (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:135:10864)
+	at M.<computed>.j.charCodeAt.M.<computed> (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:135:8315)
+	at n.g (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:126:83747)
+	at n.executeCommand (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:126:83185)
+	at b.registerCommand.description (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:126:82506)
+	at n.h (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:126:84283)
+	at n.g (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:126:83278)
+	at n.executeCommand (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:126:83185)
+	at Object.executeCommand (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:141:21282)
+	at s.D [as value] (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/extensions/git/dist/main.js:2:1312800)
+	at c.z (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:80:1902)
+	at c.A (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:80:1972)
+	at c.fire (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:80:2188)
+	at Object.m [as dispose] (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/extensions/git/dist/main.js:2:1328588)
+	at /home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/extensions/git/dist/main.js:2:1333429
+	at Array.forEach (<anonymous>)
+	at g.dispose (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/extensions/git/dist/main.js:2:1333415)
+	at w.<anonymous> (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:122:3521)
+	at w.dispose (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:122:3618)
+	at w.<anonymous> (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/extensions/git/dist/main.js:2:1314812)
+	at w.dispose (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:122:3618)
+	at o (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:30:754)
+	at s.cb (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:137:9846)
+	at /home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:137:7796
+	at Array.map (<anonymous>)
+	at s.Y (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:137:7784)
+	at s.terminate (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:137:8054)
+	at o.terminate (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:141:1513)
+	at l (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:154:9801)
+	at j.a (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:154:6531)
+	at j.h (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:90:19695)
+	at listOnTimeout (node:internal/timers:569:17)
+	at process.processTimers (node:internal/timers:512:7) setContext undefined
+2023-10-26 16:32:21.307 [error] Canceled: Canceled
+	at new m (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:126:57216)
+	at i.U (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:135:10864)
+	at M.<computed>.j.charCodeAt.M.<computed> (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:135:8315)
+	at n.g (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:126:83747)
+	at n.executeCommand (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:126:83185)
+	at b.registerCommand.description (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:126:82506)
+	at n.h (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:126:84283)
+	at n.g (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:126:83278)
+	at n.executeCommand (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:126:83185)
+	at Object.executeCommand (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:141:21282)
+	at set b [as b] (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/extensions/github/dist/extension.js:2:714415)
+	at /home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/extensions/github/dist/extension.js:2:715056
+	at s.value (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/extensions/git/dist/main.js:2:1402040)
+	at c.z (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:80:1902)
+	at c.A (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:80:1972)
+	at c.fire (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:80:2188)
+	at Object.m [as dispose] (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/extensions/git/dist/main.js:2:1328588)
+	at /home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/extensions/git/dist/main.js:2:1333429
+	at Array.forEach (<anonymous>)
+	at g.dispose (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/extensions/git/dist/main.js:2:1333415)
+	at w.<anonymous> (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:122:3521)
+	at w.dispose (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:122:3618)
+	at w.<anonymous> (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/extensions/git/dist/main.js:2:1314812)
+	at w.dispose (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:122:3618)
+	at o (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:30:754)
+	at s.cb (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:137:9846)
+	at /home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:137:7796
+	at Array.map (<anonymous>)
+	at s.Y (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:137:7784)
+	at s.terminate (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:137:8054)
+	at o.terminate (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:141:1513)
+	at l (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:154:9801)
+	at j.a (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:154:6531)
+	at j.h (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/workbench/api/node/extensionHostProcess.js:90:19695)
+	at listOnTimeout (node:internal/timers:569:17)
+	at process.processTimers (node:internal/timers:512:7) setContext undefined
+2023-10-26 16:32:21.308 [info] Extension host with pid 23121 exiting with code 0

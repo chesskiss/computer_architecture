@@ -419,7 +419,7 @@ module lab2_proc_ProcBaseCtrl
       
       // mem 
       
-      //`TINYRV2_INST_SW    :cs( y, br_na,  imm_s, bm_rf1,y,  bm_imm,  y, alu_add, res_alu,   st, wm_a, n,  n,   n,     n   );
+      `TINYRV2_INST_SW    :cs( y, br_na,  imm_s, bm_rf1,y,  bm_imm,  y, alu_add, res_alu,   st, wm_a, n,  n,   n,     n   );
       
       // jump 
       

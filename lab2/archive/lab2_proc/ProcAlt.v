@@ -139,7 +139,7 @@ lab2_proc_DropUnit #($bits(mem_resp_4B_t)) imem_respstream_drop_unit
   logic [2:0 ] dmem_reqstream_enq_msg_type;
   logic [31:0] dmem_reqstream_enq_msg_addr;
   logic [31:0] dmem_reqstream_enq_msg_data;
-    logic [1:0] dmem_reqstream_type_enq;
+  logic [1:0] dmem_reqstream_type_enq;
 
   assign dmem_reqstream_enq_msg.type_  = (dmem_reqstream_type_enq == 2'd1 ? `VC_MEM_REQ_MSG_TYPE_READ : `VC_MEM_REQ_MSG_TYPE_WRITE);
   assign dmem_reqstream_enq_msg.opaque = 8'b0;

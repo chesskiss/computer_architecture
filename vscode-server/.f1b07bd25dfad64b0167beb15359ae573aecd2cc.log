@@ -58,3 +58,48 @@ Cancelling previous shutdown timeout
 [13:10:37] Extensions removed from another source ms-vscode.cpptools-extension-pack file:///home/ac2842/.vscode-server/extensions/extensions.json
 [13:10:37] Started initializing default profile extensions in extensions installation folder. file:///home/ac2842/.vscode-server/extensions
 [13:10:37] Completed initializing default profile extensions in extensions installation folder. file:///home/ac2842/.vscode-server/extensions
+New EH opened, aborting shutdown
+[13:15:25] New EH opened, aborting shutdown
+[13:15:26] Started initializing default profile extensions in extensions installation folder. file:///home/ac2842/.vscode-server/extensions
+[13:15:26] x [Error]: Unable to resolve nonexistent file '/home/ac2842/.vscode-server/extensions'
+    at y.resolve (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:109:13154)
+    at async x.n (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:159:55147)
+    at async x.scanExtensions (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:159:54914)
+    at async g.scanUserExtensions (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:159:47764)
+    at async /home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:159:49782
+    at async g.scanUserExtensions (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:159:47860)
+    at async W.scanExtensions (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:168:10979)
+    at async d.call (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:104:22718) {
+  fileOperationResult: 1,
+  options: undefined
+}
+[13:17:44] Started initializing default profile extensions in extensions installation folder. file:///home/ac2842/.vscode-server/extensions
+[13:17:44] x [Error]: Unable to resolve nonexistent file '/home/ac2842/.vscode-server/extensions'
+    at y.resolve (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:109:13154)
+    at async x.n (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:159:55147)
+    at async x.scanExtensions (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:159:54914)
+    at async g.scanUserExtensions (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:159:47764)
+    at async /home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:159:49782
+    at async g.scanUserExtensions (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:159:47860)
+    at async Promise.all (index 1) {
+  fileOperationResult: 1,
+  options: undefined
+}
+[13:17:44] Started initializing default profile extensions in extensions installation folder. file:///home/ac2842/.vscode-server/extensions
+[13:17:44] x [Error]: Unable to resolve nonexistent file '/home/ac2842/.vscode-server/extensions'
+    at y.resolve (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:109:13154)
+    at async x.n (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:159:55147)
+    at async x.scanExtensions (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:159:54914)
+    at async g.scanUserExtensions (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:159:47764)
+    at async /home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:159:49782
+    at async g.scanUserExtensions (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:159:47860)
+    at async W.scanExtensions (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:168:10979)
+    at async d.call (/home/ac2842/.vscode-server/bin/f1b07bd25dfad64b0167beb15359ae573aecd2cc/out/vs/server/node/server.main.js:104:22718) {
+  fileOperationResult: 1,
+  options: undefined
+}
+[16:32:21] [127.0.0.1][4a9ee39c][ExtensionHostConnection] <23121> Extension Host Process exited with code: 0, signal: null.
+Last EH closed, waiting before shutting down
+[16:32:21] Last EH closed, waiting before shutting down
+Last EH closed, shutting down
+[16:37:21] Last EH closed, shutting down
