@@ -20,5 +20,5 @@ lw x7, -5(x1)
 
 csrw proc2mngr, x8 > 500
 csrw proc2mngr, x4 > 200
-csrw proc2mngr, x6 > -200
+csrw proc2mngr, x6 > 0x0000ff38
 csrw proc2mngr, x7 > 200

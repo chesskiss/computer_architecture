@@ -114,11 +114,12 @@ module lab2_proc_ProcBaseDpath
     .out  (pc_plus4_F)
   );
 
-  vc_Mux3#(32) pc_sel_mux_F
+  vc_Mux4#(32) pc_sel_mux_F
   (
     .in0  (pc_plus4_F),
-    .in1  (br_target_X),
-    .in2  (jal_target_D),
+    .in1  (jal_target_D),
+    .in2  (br_target_X),
+    .in3  (alu_result_X), // = jalr_target_X
     .sel  (pc_sel_F),
     .out  (pc_next_F)
   );
@@ -294,7 +295,7 @@ module lab2_proc_ProcBaseDpath
     .ops_ltu  (br_cond_ltu_X)
   );
 
-  //logic [63:0] imul_input = {op1_D , op2_D};
+  //logic [63:0] imul_input = {op1_D , op2_D}; 
   logic [31:0] imul_resp_msg;
 
   lab1_imul_IntMulAlt mul

@@ -27,3 +27,9 @@ nop
 nop
 nop
 csrw proc2mngr, x3 > 500
+
+addi x2, x2, -400
+sw x2,  0(x1)
+lw x3,  0(x1) 
+csrw proc2mngr, x3 > 100
+

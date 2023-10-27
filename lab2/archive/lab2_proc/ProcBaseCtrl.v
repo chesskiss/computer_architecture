@@ -180,9 +180,9 @@ module lab2_proc_ProcBaseCtrl
     if ( pc_redirect_X )   // If a branch is taken in X stage
       pc_sel_F = pc_sel_X; // Use pc from X
     else if (pc_redirect_D)
-    pc_sel_F = pc_sel_D;
-    else// Use pc+4
-    pc_sel_F = 2'b0;
+      pc_sel_F = pc_sel_D;
+    else // Use pc+4
+      pc_sel_F = 2'b0;
   end
 
 
@@ -450,11 +450,6 @@ module lab2_proc_ProcBaseCtrl
     endcase
   end // always_comb
 
-//  assign is_mul_D = (inst_D==`TINYRV2_INST_MUL);
-
-
-
-
   logic [4:0] rf_waddr_D;
   assign rf_waddr_D = inst_rd_D;
 
@@ -494,7 +489,7 @@ module lab2_proc_ProcBaseCtrl
 
   // mngr2proc_rdy signal for csrr instruction
 
-  assign mngr2proc_rdy = val_D && !stall_D && mngr2proc_rdy_D;
+  assign mngr2proc_rdy = val_D && !stall_D && mngr2proc_rdy_D && !squash_D;
 
   logic  ostall_mngr2proc_D;
   assign ostall_mngr2proc_D = val_D && mngr2proc_rdy_D && !mngr2proc_val;

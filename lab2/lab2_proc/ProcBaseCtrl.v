@@ -168,14 +168,17 @@ module lab2_proc_ProcBaseCtrl
 
   logic       pc_redirect_X;
   logic [1:0] pc_sel_X;
+  logic [1:0] pc_sel_D;
 
   // PC select logic
 
   always_comb begin
     if ( pc_redirect_X )   // If a branch is taken in X stage
       pc_sel_F = pc_sel_X; // Use pc from X
-    else
-      pc_sel_F = 2'b0;     // Use pc+4
+    else if (pc_redirect_D)
+      pc_sel_F = pc_sel_D;
+    else // Use pc+4
+      pc_sel_F = 2'b0;
   end
 
   // ostall due to the imem response not valid.
@@ -405,7 +408,7 @@ module lab2_proc_ProcBaseCtrl
 
       // reg-imm 
 
-      `TINYRV2_INST_ADDI    :cs( y, br_na,  imm_i, bm_rf1,y,  bm_imm,  n, alu_add, res_alu,   nr, wm_a, y,  n,   n,     n   );
+      `TINYRV2_INST_ADDI  :cs( y, br_na,  imm_i, bm_rf1,y,  bm_imm,  n, alu_add, res_alu,   nr, wm_a, y,  n,   n,     n   );
       `TINYRV2_INST_ANDI  :cs( y, br_na,  imm_i, bm_rf1,y,  bm_imm,  n, alu_and, res_alu,   nr, wm_a, y,  n,   n,     n   );
       `TINYRV2_INST_ORI   :cs( y, br_na,  imm_i, bm_rf1,y,  bm_imm,  n, alu_or,  res_alu,   nr, wm_a, y,  n,   n,     n   );
       `TINYRV2_INST_XORI  :cs( y, br_na,  imm_i, bm_rf1,y,  bm_imm,  n, alu_xor, res_alu,   nr, wm_a, y,  n,   n,     n   );
@@ -462,6 +465,20 @@ module lab2_proc_ProcBaseCtrl
       csrr_sel_D       = 2'h1;
     if ( csrr_D && inst_csr_D == `TINYRV2_CPR_COREID )
       csrr_sel_D       = 2'h2;
+  end
+  
+// Jal case handler
+  logic pc_redirect_D;
+  always_comb begin
+  if  ( val_D&& ( imm_type_D == imm_j ) ) begin // = jal
+      pc_redirect_D = 1'b1;
+      pc_sel_D      = 2'b1; // jal target
+    end
+    else begin
+      pc_redirect_D = 1'b0;
+      pc_sel_D      = 2'b0;
+    end
+
   end
 
   // mngr2proc_rdy signal for csrr instruction
@@ -524,9 +541,9 @@ module lab2_proc_ProcBaseCtrl
 
   assign ostall_D = val_D && ( ostall_mngr2proc_D || ostall_hazard_D || (!imul_req_rdy_D && is_mul_D));
 
-  // osquash due to jump instruction in D stage (not implemented yet)
+  // osquash due to jump instruction in D stage 
 
-  assign osquash_D = 1'b0;
+  assign osquash_D = imm_type_D == imm_j;
 
   // stall and squash in D
 
@@ -584,51 +601,35 @@ module lab2_proc_ProcBaseCtrl
   always_comb begin
     if ( val_X && ( br_type_X == br_bne ) ) begin
       pc_redirect_X = !br_cond_eq_X;
-      pc_sel_X      = 2'b1; // use branch target
+      pc_sel_X      = 2'd2; // use branch target
     end
-    else begin
-      pc_redirect_X = 1'b0;
-      pc_sel_X      = 2'b0; // use pc+4
-    end
-    if ( val_X && ( br_type_X == br_beq ) ) begin
+    else if ( val_X && ( br_type_X == br_beq ) ) begin
       pc_redirect_X = br_cond_eq_X;
-      pc_sel_X      = 2'b1; // use branch target
+      pc_sel_X      = 2'd2; // use branch target
     end
-    else begin
-      pc_redirect_X = 1'b0;
-      pc_sel_X      = 2'b0; // use pc+4
-    end
-    if ( val_X && ( br_type_X == br_blt ) ) begin
+    else if ( val_X && ( br_type_X == br_blt ) ) begin
       pc_redirect_X = br_cond_lt_X;
-      pc_sel_X      = 2'b1; // use branch target
+      pc_sel_X      = 2'd2; // use branch target
     end
-    else begin
-      pc_redirect_X = 1'b0;
-      pc_sel_X      = 2'b0; // use pc+4
-    end
-    if ( val_X && ( br_type_X == br_bge ) ) begin
+    else if ( val_X && ( br_type_X == br_bge ) ) begin
       pc_redirect_X = !br_cond_lt_X;
-      pc_sel_X      = 2'b1; // use branch target
+      pc_sel_X      = 2'd2; // use branch target
     end
-    else begin
-      pc_redirect_X = 1'b0;
-      pc_sel_X      = 2'b0; // use pc+4
-    end
-    if ( val_X && ( br_type_X == br_bltu ) ) begin
+    else if ( val_X && ( br_type_X == br_bltu ) ) begin
       pc_redirect_X = br_cond_ltu_X;
-      pc_sel_X      = 2'b1; // use branch target
+      pc_sel_X      = 2'd2; // use branch target
     end
-    else begin
-      pc_redirect_X = 1'b0;
-      pc_sel_X      = 2'b0; // use pc+4
-    end
-    if ( val_X && ( br_type_X == br_bgeu ) ) begin
+    else if ( val_X && ( br_type_X == br_bgeu ) ) begin
       pc_redirect_X = !br_cond_ltu_X;
-      pc_sel_X      = 2'b1; // use branch target
+      pc_sel_X      = 2'd2; // use branch target
+    end
+    else if (val_X && alu_fn_X == alu_jalr) begin
+      pc_redirect_X = 1'd1;
+      pc_sel_X      = 2'd3; // use branch target jalr
     end
     else begin
-      pc_redirect_X = 1'b0;
-      pc_sel_X      = 2'b0; // use pc+4
+      pc_redirect_X = 1'd0;
+      pc_sel_X      = 2'd0; // use pc+4
     end
   end
 

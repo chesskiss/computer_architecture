@@ -168,15 +168,18 @@ module lab2_proc_ProcAltCtrl
 
   logic       pc_redirect_X;
   logic [1:0] pc_sel_X;
+    logic [1:0] pc_sel_D;
 
   // PC select logic
 
   always_comb begin
     if ( pc_redirect_X )   // If a branch is taken in X stage
       pc_sel_F = pc_sel_X; // Use pc from X
-    else
-      pc_sel_F = 2'b0;     // Use pc+4
-  end
+    else if (pc_redirect_D)
+      pc_sel_F = pc_sel_D;
+    else // Use pc+4
+      pc_sel_F = 2'b0;
+   end
 
   // ostall due to the imem response not valid.
 
@@ -407,7 +410,7 @@ module lab2_proc_ProcAltCtrl
 
       // reg-imm 
 
-      `TINYRV2_INST_ADDI    :cs( y, br_na,  imm_i, bm_rf1,y,  bm_imm,  n, alu_add, res_alu,   nr, wm_a, y,  n,   n,     n   );
+      `TINYRV2_INST_ADDI  :cs( y, br_na,  imm_i, bm_rf1,y,  bm_imm,  n, alu_add, res_alu,   nr, wm_a, y,  n,   n,     n   );
       `TINYRV2_INST_ANDI  :cs( y, br_na,  imm_i, bm_rf1,y,  bm_imm,  n, alu_and, res_alu,   nr, wm_a, y,  n,   n,     n   );
       `TINYRV2_INST_ORI   :cs( y, br_na,  imm_i, bm_rf1,y,  bm_imm,  n, alu_or,  res_alu,   nr, wm_a, y,  n,   n,     n   );
       `TINYRV2_INST_XORI  :cs( y, br_na,  imm_i, bm_rf1,y,  bm_imm,  n, alu_xor, res_alu,   nr, wm_a, y,  n,   n,     n   );
@@ -466,6 +469,20 @@ module lab2_proc_ProcAltCtrl
       csrr_sel_D       = 2'h2;
   end
 
+  // Jal case handler
+  logic pc_redirect_D;
+  always_comb begin
+  if  ( val_D&& ( imm_type_D == imm_j ) ) begin // = jal
+      pc_redirect_D = 1'b1;
+      pc_sel_D      = 2'b1; // jal target
+  end
+  else begin
+      pc_redirect_D = 1'b0;
+      pc_sel_D      = 2'b0;
+    end
+
+  end
+
 // ----------- Bypassing logic ------------------
   logic  bypass_waddr_X_rs1_D;
   assign bypass_waddr_X_rs1_D = rs1_en_D && val_X && rf_wen_X && 
@@ -493,7 +510,6 @@ module lab2_proc_ProcAltCtrl
   assign bypass_waddr_W_rs2_D
     = rs2_en_D && val_W && rf_wen_W
       && ( inst_rs2_D == rf_waddr_W ) && ( rf_waddr_W != 5'd0 );
-
 
   always_comb begin
     if (bypass_waddr_X_rs1_D ) begin
@@ -537,66 +553,65 @@ module lab2_proc_ProcAltCtrl
 
   // ostall if write address in X matches rs1 in D
 
-  logic  ostall_waddr_X_rs1_D;
-  assign ostall_waddr_X_rs1_D
-    = rs1_en_D && val_X && rf_wen_X
-      && ( inst_rs1_D == rf_waddr_X ) && ( rf_waddr_X != 5'd0 );
+ // delete todo: logic  ostall_waddr_X_rs1_D; 
+ // delete todo:  assign ostall_waddr_X_rs1_D
+ // delete todo:    = rs1_en_D && val_X && rf_wen_X
+ // delete todo:       && ( inst_rs1_D == rf_waddr_X ) && ( rf_waddr_X != 5'd0 );
 
   // ostall if write address in M matches rs1 in D
 
-  logic  ostall_waddr_M_rs1_D;
-  assign ostall_waddr_M_rs1_D
-    = rs1_en_D && val_M && rf_wen_M
-      && ( inst_rs1_D == rf_waddr_M ) && ( rf_waddr_M != 5'd0 );
+  // delete todo: logic  ostall_waddr_M_rs1_D;
+  // delete todo: assign ostall_waddr_M_rs1_D
+  // delete todo:   = rs1_en_D && val_M && rf_wen_M
+  // delete todo:     && ( inst_rs1_D == rf_waddr_M ) && ( rf_waddr_M != 5'd0 );
 
   // ostall if write address in W matches rs1 in D
 
-  logic  ostall_waddr_W_rs1_D;
-  assign ostall_waddr_W_rs1_D
-    = rs1_en_D && val_W && rf_wen_W
-      && ( inst_rs1_D == rf_waddr_W ) && ( rf_waddr_W != 5'd0 );
+  // delete todo: logic  ostall_waddr_W_rs1_D;
+  // delete todo: assign ostall_waddr_W_rs1_D
+  // delete todo:   = rs1_en_D && val_W && rf_wen_W
+  // delete todo:     && ( inst_rs1_D == rf_waddr_W ) && ( rf_waddr_W != 5'd0 );
 
   // ostall if write address in X matches rs2 in D
 
-  logic  ostall_waddr_X_rs2_D;
-  assign ostall_waddr_X_rs2_D
-    = rs2_en_D && val_X && rf_wen_X
-      && ( inst_rs2_D == rf_waddr_X ) && ( rf_waddr_X != 5'd0 );
-
+  // delete todo: logic  ostall_waddr_X_rs2_D;
+  // delete todo: assign ostall_waddr_X_rs2_D
+  // delete todo:   = rs2_en_D && val_X && rf_wen_X
+  // delete todo:     && ( inst_rs2_D == rf_waddr_X ) && ( rf_waddr_X != 5'd0 );
+// delete todo: 
   // ostall if write address in M matches rs2 in D
 
-  logic  ostall_waddr_M_rs2_D;
-  assign ostall_waddr_M_rs2_D
-    = rs2_en_D && val_M && rf_wen_M
-      && ( inst_rs2_D == rf_waddr_M ) && ( rf_waddr_M != 5'd0 );
+ // delete todo: logic  ostall_waddr_M_rs2_D;
+ // delete todo: assign ostall_waddr_M_rs2_D
+ // delete todo:   = rs2_en_D && val_M && rf_wen_M
+ // delete todo:     && ( inst_rs2_D == rf_waddr_M ) && ( rf_waddr_M != 5'd0 );
 
-  // ostall if write address in W matches rs2 in D
+ // delete todo: // ostall if write address in W matches rs2 in D
 
-  logic  ostall_waddr_W_rs2_D;
-  assign ostall_waddr_W_rs2_D
-    = rs2_en_D && val_W && rf_wen_W
-      && ( inst_rs2_D == rf_waddr_W ) && ( rf_waddr_W != 5'd0 );
+ // delete todo: logic  ostall_waddr_W_rs2_D;
+ // delete todo: assign ostall_waddr_W_rs2_D
+ // delete todo:   = rs2_en_D && val_W && rf_wen_W
+ // delete todo:     && ( inst_rs2_D == rf_waddr_W ) && ( rf_waddr_W != 5'd0 );
 
-  // Put together ostall signal due to hazards
+ // delete todo: // Put together ostall signal due to hazards
 
-  logic  ostall_hazard_D;
-  assign ostall_hazard_D =
-      ostall_waddr_X_rs1_D || ostall_waddr_M_rs1_D || ostall_waddr_W_rs1_D ||
-      ostall_waddr_X_rs2_D || ostall_waddr_M_rs2_D || ostall_waddr_W_rs2_D;
+ // delete todo: logic  ostall_hazard_D;
+ // delete todo: assign ostall_hazard_D =
+ // delete todo:     ostall_waddr_X_rs1_D || ostall_waddr_M_rs1_D || ostall_waddr_W_rs1_D ||
+ // delete todo:     ostall_waddr_X_rs2_D || ostall_waddr_M_rs2_D || ostall_waddr_W_rs2_D;
 
   // Final ostall signal
 
-  assign ostall_D = val_D && ( ostall_mngr2proc_D || ostall_hazard_D || (!imul_req_rdy_D && is_mul_D));
+  assign ostall_D = val_D && ( ostall_mngr2proc_D || (!imul_req_rdy_D && is_mul_D)); //ostall_hazard_D
 
-  // osquash due to jump instruction in D stage (not implemented yet)
+  // osquash due to jump instruction in D stage 
 
-  assign osquash_D = 1'b0;
+  assign osquash_D = imm_type_D == imm_j;
 
   // stall and squash in D
 
   assign stall_D  = val_D && ( ostall_D || ostall_X || ostall_M || ostall_W);
   assign squash_D = val_D && osquash_X;
-
 
   // Valid signal for the next stage
 
@@ -649,51 +664,35 @@ module lab2_proc_ProcAltCtrl
   always_comb begin
     if ( val_X && ( br_type_X == br_bne ) ) begin
       pc_redirect_X = !br_cond_eq_X;
-      pc_sel_X      = 2'b1; // use branch target
+      pc_sel_X      = 2'd2; // use branch target
     end
-    else begin
-      pc_redirect_X = 1'b0;
-      pc_sel_X      = 2'b0; // use pc+4
-    end
-    if ( val_X && ( br_type_X == br_beq ) ) begin
+    else if ( val_X && ( br_type_X == br_beq ) ) begin
       pc_redirect_X = br_cond_eq_X;
-      pc_sel_X      = 2'b1; // use branch target
+      pc_sel_X      = 2'd2; // use branch target
     end
-    else begin
-      pc_redirect_X = 1'b0;
-      pc_sel_X      = 2'b0; // use pc+4
-    end
-    if ( val_X && ( br_type_X == br_blt ) ) begin
+    else if ( val_X && ( br_type_X == br_blt ) ) begin
       pc_redirect_X = br_cond_lt_X;
-      pc_sel_X      = 2'b1; // use branch target
+      pc_sel_X      = 2'd2; // use branch target
     end
-    else begin
-      pc_redirect_X = 1'b0;
-      pc_sel_X      = 2'b0; // use pc+4
-    end
-    if ( val_X && ( br_type_X == br_bge ) ) begin
+    else if ( val_X && ( br_type_X == br_bge ) ) begin
       pc_redirect_X = !br_cond_lt_X;
-      pc_sel_X      = 2'b1; // use branch target
+      pc_sel_X      = 2'd2; // use branch target
     end
-    else begin
-      pc_redirect_X = 1'b0;
-      pc_sel_X      = 2'b0; // use pc+4
-    end
-    if ( val_X && ( br_type_X == br_bltu ) ) begin
+    else if ( val_X && ( br_type_X == br_bltu ) ) begin
       pc_redirect_X = br_cond_ltu_X;
-      pc_sel_X      = 2'b1; // use branch target
+      pc_sel_X      = 2'd2; // use branch target
     end
-    else begin
-      pc_redirect_X = 1'b0;
-      pc_sel_X      = 2'b0; // use pc+4
-    end
-    if ( val_X && ( br_type_X == br_bgeu ) ) begin
+    else if ( val_X && ( br_type_X == br_bgeu ) ) begin
       pc_redirect_X = !br_cond_ltu_X;
-      pc_sel_X      = 2'b1; // use branch target
+      pc_sel_X      = 2'd2; // use branch target
+    end
+    else if (val_X && alu_fn_X == alu_jalr) begin
+      pc_redirect_X = 1'd1;
+      pc_sel_X      = 2'd3; // use branch target jalr
     end
     else begin
-      pc_redirect_X = 1'b0;
-      pc_sel_X      = 2'b0; // use pc+4
+      pc_redirect_X = 1'd0;
+      pc_sel_X      = 2'd0; // use pc+4
     end
   end
 

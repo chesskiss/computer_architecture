@@ -2,20 +2,171 @@
 # sample asm file for tutorial
 #---------------------------------------
 
-# set the address where you want this
-# code segment
-
-
-   xor x1, x1, x1
-   xori x1, x1, 0x0200
-   add x3, x1, x1
-   xor x1, x1, x1
-   #Loading Data section
-   lui x1, 0x0002
-   # label_a is 0x000, it's true location is 0x0002000 
-   # but sw only takes lower 12-bits
-   sw x3,  label_a(x1)
-   #data section
-   .data
-   label_a:
-   .word 5000
+csrr x1, mngr2proc < 5
+csrr x2, mngr2proc < 4
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+add x3, x1, x2
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+csrw proc2mngr, x3 > 9
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+csrr x1, mngr2proc < -20
+csrr x2, mngr2proc < -100
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+add x3, x1, x2
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+csrw proc2mngr, x3 > -120
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+csrr x1, mngr2proc < 12345
+csrr x2, mngr2proc < 67890
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+add x3, x1, x2
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+csrw proc2mngr, x3 > 80235
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+csrr x1, mngr2proc < 0
+csrr x2, mngr2proc < 1
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+add x3, x1, x2
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+csrw proc2mngr, x3 > 1
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+csrr x1, mngr2proc < 0
+csrr x2, mngr2proc < 0
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+add x3, x1, x2
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+csrw proc2mngr, x3 > 0
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+csrr x1, mngr2proc < 0
+csrr x2, mngr2proc < 1
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+add x3, x1, x2
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+csrw proc2mngr, x3 > 1
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop

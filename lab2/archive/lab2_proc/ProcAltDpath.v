@@ -125,9 +125,9 @@ module lab2_proc_AltDpath
   vc_Mux4#(32) pc_sel_mux_F
   (
     .in0  (pc_plus4_F),
-    .in1  (br_target_X),
-    .in2  (jal_target_D1),
-    .in3  (alu_result_X),
+    .in1  (jal_target_D1),
+    .in2  (br_target_X),
+    .in3  (alu_result_X), // = jalr
     .sel  (pc_sel_F),
     .out  (pc_next_F)
   );
