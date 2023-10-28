@@ -33,6 +33,7 @@ module lab2_proc_ProcAltDpath
 
   output logic [31:0]  dmem_reqstream_msg_addr,
   input  logic [31:0]  dmem_respstream_msg_data,
+output logic [31:0]  dmemreq_msg_data,
 
   // mngr communication ports
 
@@ -75,6 +76,8 @@ module lab2_proc_ProcAltDpath
   output logic         br_cond_lt_X,
   output logic         br_cond_ltu_X,
   output logic         imul_resp_val_X,
+  output logic [31:0]  dmem_reqstream_msg_data,
+
 
   // extra ports
 
@@ -248,9 +251,20 @@ module lab2_proc_ProcAltDpath
   //--------------------------------------------------------------------
 
   logic [31:0] pc_X;
+  logic [31:0] pc_plus4_X;
   logic [31:0] op1_X;
   logic [31:0] op2_X;
   
+  vc_EnResetReg#(32, 0) br_target_reg_X
+  (
+    .clk   (clk),
+    .reset (reset),
+    .en    (reg_en_X),
+    .d     (jal_target_D),
+    .q     (br_target_X)
+  );
+
+
   vc_EnResetReg#(32) pc_reg_X
   (
     .clk    (clk),
@@ -278,13 +292,13 @@ module lab2_proc_ProcAltDpath
     .q     (op2_X)
   );
 
-  vc_EnResetReg#(32, 0) br_target_reg_X
+  vc_EnResetReg#(32) dmem_write_data_reg_X
   (
-    .clk   (clk),
-    .reset (reset),
-    .en    (reg_en_X),
-    .d     (jal_target_D),
-    .q     (br_target_X)
+    .clk    (clk),
+    .reset  (reset),
+    .en     (reg_en_D),
+    .d      (rf_rdata1_D),
+    .q      (dmemreq_msg_data)
   );
 
   logic [31:0] alu_result_X;
@@ -299,6 +313,12 @@ module lab2_proc_ProcAltDpath
     .ops_eq   (br_cond_eq_X),
     .ops_lt   (br_cond_lt_X),
     .ops_ltu  (br_cond_ltu_X)
+  );
+
+  vc_Incrementer#(32, 4) pc_incr_X
+  (
+    .in   (pc_X),
+    .out  (pc_plus4_X)
   );
 
   //logic [63:0] imul_input = {op1_D , op2_D};
@@ -320,7 +340,7 @@ module lab2_proc_ProcAltDpath
   // This mux chooses among PC, ALU and MUL
   vc_Mux3#(32) ex_result_sel_mux_X
   (
-    .in0  (pc_X),
+    .in0  (pc_plus4_X),
     .in1  (alu_result_X),
     .in2  (imul_resp_msg),
     .sel  (ex_result_sel_X),

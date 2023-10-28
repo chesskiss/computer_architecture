@@ -551,58 +551,10 @@ module lab2_proc_ProcAltCtrl
   logic  ostall_mngr2proc_D;
   assign ostall_mngr2proc_D = val_D && mngr2proc_rdy_D && !mngr2proc_val;
 
-  // ostall if write address in X matches rs1 in D
-
- // delete todo: logic  ostall_waddr_X_rs1_D; 
- // delete todo:  assign ostall_waddr_X_rs1_D
- // delete todo:    = rs1_en_D && val_X && rf_wen_X
- // delete todo:       && ( inst_rs1_D == rf_waddr_X ) && ( rf_waddr_X != 5'd0 );
-
-  // ostall if write address in M matches rs1 in D
-
-  // delete todo: logic  ostall_waddr_M_rs1_D;
-  // delete todo: assign ostall_waddr_M_rs1_D
-  // delete todo:   = rs1_en_D && val_M && rf_wen_M
-  // delete todo:     && ( inst_rs1_D == rf_waddr_M ) && ( rf_waddr_M != 5'd0 );
-
-  // ostall if write address in W matches rs1 in D
-
-  // delete todo: logic  ostall_waddr_W_rs1_D;
-  // delete todo: assign ostall_waddr_W_rs1_D
-  // delete todo:   = rs1_en_D && val_W && rf_wen_W
-  // delete todo:     && ( inst_rs1_D == rf_waddr_W ) && ( rf_waddr_W != 5'd0 );
-
-  // ostall if write address in X matches rs2 in D
-
-  // delete todo: logic  ostall_waddr_X_rs2_D;
-  // delete todo: assign ostall_waddr_X_rs2_D
-  // delete todo:   = rs2_en_D && val_X && rf_wen_X
-  // delete todo:     && ( inst_rs2_D == rf_waddr_X ) && ( rf_waddr_X != 5'd0 );
-// delete todo: 
-  // ostall if write address in M matches rs2 in D
-
- // delete todo: logic  ostall_waddr_M_rs2_D;
- // delete todo: assign ostall_waddr_M_rs2_D
- // delete todo:   = rs2_en_D && val_M && rf_wen_M
- // delete todo:     && ( inst_rs2_D == rf_waddr_M ) && ( rf_waddr_M != 5'd0 );
-
- // delete todo: // ostall if write address in W matches rs2 in D
-
- // delete todo: logic  ostall_waddr_W_rs2_D;
- // delete todo: assign ostall_waddr_W_rs2_D
- // delete todo:   = rs2_en_D && val_W && rf_wen_W
- // delete todo:     && ( inst_rs2_D == rf_waddr_W ) && ( rf_waddr_W != 5'd0 );
-
- // delete todo: // Put together ostall signal due to hazards
-
- // delete todo: logic  ostall_hazard_D;
- // delete todo: assign ostall_hazard_D =
- // delete todo:     ostall_waddr_X_rs1_D || ostall_waddr_M_rs1_D || ostall_waddr_W_rs1_D ||
- // delete todo:     ostall_waddr_X_rs2_D || ostall_waddr_M_rs2_D || ostall_waddr_W_rs2_D;
-
+ 
   // Final ostall signal
 
-  assign ostall_D = val_D && ( ostall_mngr2proc_D || (!imul_req_rdy_D && is_mul_D)); //ostall_hazard_D
+  assign ostall_D = val_D && ( ostall_mngr2proc_D || (!imul_req_rdy_D && is_mul_D)); 
 
   // osquash due to jump instruction in D stage 
 
@@ -636,7 +588,7 @@ module lab2_proc_ProcAltCtrl
   logic [2:0]  br_type_X;
   logic is_mul_X;
   assign imul_resp_rdy_X = is_mul_X && val_X & !stall_X & imul_resp_val_X;
-
+assign       dmem_reqstream_type =  (dmem_reqstream_type_X==st)? 2'd0: 2'd1;
 
   // Pipeline registers
 

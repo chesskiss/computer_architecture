@@ -37,7 +37,6 @@ module lab2_proc_ProcBaseCtrl
   input  logic        proc2mngr_rdy,
 
   // control signals (ctrl->dpath)
-
   output logic        reg_en_F,
   output logic [1:0]  pc_sel_F,
 
@@ -49,6 +48,7 @@ module lab2_proc_ProcBaseCtrl
   output logic        imul_req_val_D,
 
   output logic [1:0]  ex_result_sel_D,
+  output logic [1:0]  dmem_reqstream_type,
 
   output logic        reg_en_X,
   output logic [3:0]  alu_fn_X,
@@ -341,6 +341,7 @@ module lab2_proc_ProcBaseCtrl
   logic       stats_en_wen_D;
   logic       is_mul_D;
 
+
   task cs
   (
     input logic       cs_inst_val,
@@ -573,7 +574,7 @@ module lab2_proc_ProcBaseCtrl
   logic [2:0]  br_type_X;
   logic is_mul_X;
   assign imul_resp_rdy_X = is_mul_X && val_X & !stall_X & imul_resp_val_X;
-
+  assign       dmem_reqstream_type =  (dmem_reqstream_type_X==st)? 2'd0: 2'd1;
 
   // Pipeline registers
 

@@ -33,6 +33,7 @@ module lab2_proc_ProcBaseDpath
 
   output logic [31:0]  dmem_reqstream_msg_addr,
   input  logic [31:0]  dmem_respstream_msg_data,
+  output logic [31:0]  dmemreq_msg_data,
 
   // mngr communication ports
 
@@ -237,13 +238,24 @@ module lab2_proc_ProcBaseDpath
     .cout ()
   );
 
+
   //--------------------------------------------------------------------
   // X stage
   //--------------------------------------------------------------------
 
   logic [31:0] pc_X;
+  logic [31:0] pc_plus4_X;
   logic [31:0] op1_X;
   logic [31:0] op2_X;
+  
+  vc_EnResetReg#(32, 0) br_target_reg_X
+  (
+    .clk   (clk),
+    .reset (reset),
+    .en    (reg_en_X),
+    .d     (jal_target_D),
+    .q     (br_target_X)
+  );
   
   vc_EnResetReg#(32) pc_reg_X
   (
@@ -272,13 +284,19 @@ module lab2_proc_ProcBaseDpath
     .q     (op2_X)
   );
 
-  vc_EnResetReg#(32, 0) br_target_reg_X
+  vc_EnResetReg#(32) dmem_write_data_reg_X
   (
-    .clk   (clk),
-    .reset (reset),
-    .en    (reg_en_X),
-    .d     (jal_target_D),
-    .q     (br_target_X)
+    .clk    (clk),
+    .reset  (reset),
+    .en     (reg_en_D),
+    .d      (rf_rdata1_D),
+    .q      (dmemreq_msg_data)
+  );
+
+  vc_Incrementer#(32, 4) pc_incr_X
+  (
+    .in   (pc_X),
+    .out  (pc_plus4_X)
   );
 
   logic [31:0] alu_result_X;
@@ -314,7 +332,7 @@ module lab2_proc_ProcBaseDpath
   // This mux chooses among PC, ALU and MUL
   vc_Mux3#(32) ex_result_sel_mux_X
   (
-    .in0  (pc_X),
+    .in0  (pc_plus4_X),
     .in1  (alu_result_X),
     .in2  (imul_resp_msg),
     .sel  (ex_result_sel_X),
