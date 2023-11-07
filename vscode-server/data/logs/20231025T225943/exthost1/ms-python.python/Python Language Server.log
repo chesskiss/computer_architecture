@@ -1,0 +1,15 @@
+2023-10-25 23:10:03.799 [info] [Info  - 11:10:03 PM] (36565) Pylance language server 2023.10.40 (pyright 088ebaa5) starting
+2023-10-25 23:10:03.799 [info] [Info  - 11:10:03 PM] (36565) Server root directory: /home/ac2842/.vscode-server/extensions/ms-python.vscode-pylance-2023.10.40/dist
+2023-10-25 23:10:03.799 [info] [Info  - 11:10:03 PM] (36565) Starting service instance "computer-architecture"
+2023-10-25 23:10:03.872 [info] [Info  - 11:10:03 PM] (36565) Setting pythonPath for service "computer-architecture": "/classes/ece4750/install/stow-pkgs/x86_64-rhel7/bin/python3.7"
+2023-10-25 23:10:03.873 [info] [Info  - 11:10:03 PM] (36565) Setting environmentName for service "computer-architecture": "3.7.10 (global)"
+2023-10-25 23:10:05.232 [info] [Info  - 11:10:05 PM] (36565) Assuming Python version 3.7
+2023-10-25 23:10:06.725 [info] [Info  - 11:10:06 PM] (36565) Found 4 source files
+2023-10-25 23:10:11.415 [info] [Info  - 11:10:11 PM] (36565) [IDX(2)] Long operation: scan packages /home/ac2842/computer-architecture (3797ms)
+2023-10-25 23:23:33.774 [info] [Info  - 11:23:33 PM] (3310) Pylance language server 2023.10.40 (pyright 088ebaa5) starting
+2023-10-25 23:23:33.775 [info] [Info  - 11:23:33 PM] (3310) Server root directory: /home/ac2842/.vscode-server/extensions/ms-python.vscode-pylance-2023.10.40/dist
+2023-10-25 23:23:33.792 [info] [Info  - 11:23:33 PM] (3310) Starting service instance "computer-architecture"
+2023-10-25 23:23:33.867 [info] [Info  - 11:23:33 PM] (3310) Setting pythonPath for service "computer-architecture": "/classes/ece4750/install/stow-pkgs/x86_64-rhel7/bin/python3.7"
+2023-10-25 23:23:33.868 [info] [Info  - 11:23:33 PM] (3310) Setting environmentName for service "computer-architecture": "3.7.10 (global)"
+2023-10-25 23:23:34.597 [info] [Info  - 11:23:34 PM] (3310) Assuming Python version 3.7
+2023-10-25 23:23:35.017 [info] [Info  - 11:23:35 PM] (3310) Found 4 source files

@@ -1,0 +1,9 @@
+2023-10-25 17:46:23.290 [info] [Info  - 5:46:23 PM] (33948) Pylance language server 2023.10.40 (pyright 088ebaa5) starting
+2023-10-25 17:46:23.291 [info] [Info  - 5:46:23 PM] (33948) Server root directory: /home/ac2842/.vscode-server/extensions/ms-python.vscode-pylance-2023.10.40/dist
+2023-10-25 17:46:23.291 [info] [Info  - 5:46:23 PM] (33948) Starting service instance "computer-architecture"
+2023-10-25 17:46:23.363 [info] [Info  - 5:46:23 PM] (33948) Setting pythonPath for service "computer-architecture": "/classes/ece4750/install/stow-pkgs/x86_64-rhel7/bin/python3.7"
+2023-10-25 17:46:23.363 [info] [Info  - 5:46:23 PM] (33948) Setting environmentName for service "computer-architecture": "3.7.10 (global)"
+2023-10-25 17:46:24.721 [info] [Info  - 5:46:24 PM] (33948) Assuming Python version 3.7
+2023-10-25 17:46:25.498 [info] [Info  - 5:46:25 PM] (33948) Found 4 source files
+2023-10-25 17:46:28.548 [info] [Info  - 5:46:28 PM] (33948) [BG(1)] Long operation: checking: /home/ac2842/computer-architecture/lab2/lab2_proc/tinyrv2_encoding_assembler.py (2079ms)
+2023-10-25 17:46:28.548 [info] [Info  - 5:46:28 PM] (33948) [BG(1)] Long operation: analyzing: /home/ac2842/computer-architecture/lab2/lab2_proc/tinyrv2_encoding_assembler.py (2573ms)

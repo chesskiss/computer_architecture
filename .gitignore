@@ -1,0 +1,3 @@
+# .gitignore
+vscode-server/data/CachedExtensionVSIXs/ms-vscode.cpptools-1.17.5-linux-x64
+vscode-server/data/User/workspaceStorage/56a11434395a5b329ef6050d8c4fd0b4/ms-vscode.cpptools/.browse.VC.db

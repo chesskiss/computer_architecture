@@ -1,0 +1,15 @@
+2023-10-25 17:46:21.353 [info] Experiment 'pythonaacf' is active
+2023-10-25 17:46:21.353 [info] Experiment 'pythonPromptNewFormatterExt' is active
+2023-10-25 17:46:21.353 [info] Experiment 'pythonPromptNewToolsExt' is active
+2023-10-25 17:46:21.353 [info] Experiment 'pythonTestAdapter' is active
+2023-10-25 17:46:21.353 [info] Test server listening.
+2023-10-25 17:46:21.408 [info] Python interpreter path: /classes/ece4750/install/stow-pkgs/x86_64-rhel7/bin/python3.7
+2023-10-25 17:46:21.420 [warning] Retry failed, storage update failed for key PYTHON_GLOBAL_STORAGE_KEYS
+2023-10-25 17:46:21.420 [warning] Retry failed, storage update failed for key PYTHON_GLOBAL_STORAGE_KEYS
+2023-10-25 17:46:21.420 [warning] Retry failed, storage update failed for key PYTHON_WORKSPACE_STORAGE_KEYS
+2023-10-25 17:46:21.420 [warning] Retry failed, storage update failed for key PYTHON_WORKSPACE_STORAGE_KEYS
+2023-10-25 17:46:21.420 [warning] Retry failed, storage update failed for key PYTHON_WORKSPACE_STORAGE_KEYS
+2023-10-25 17:46:21.420 [warning] Retry failed, storage update failed for key PYTHON_WORKSPACE_STORAGE_KEYS
+2023-10-25 17:46:22.027 [warning] Retry failed, storage update failed for key PYTHON_GLOBAL_STORAGE_KEYS
+2023-10-25 17:46:22.027 [warning] Retry failed, storage update failed for key PYTHON_GLOBAL_STORAGE_KEYS
+2023-10-25 17:46:23.320 [info] Starting Pylance language server.
