@@ -6,102 +6,86 @@
 `define LAB3_CACHE_CACHE_BASE_V
 
 `include "vc/mem-msgs.v"
-`include "vc/srams.v"
 `include "vc/regs.v"
 
-module lab3_cache_CacheBase (
-    input logic clk,
-    input logic reset,
+module lab3_cache_CacheBase
+(
+  input  logic                    clk,
+  input  logic                    reset,
 
 
-    // imem
+  // imem
 
-    input  logic        memreq_val,
-    output logic        memreq_rdy,
-    input  mem_req_4B_t memreq_msg,
+  input  logic                    memreq_val,
+  output logic                    memreq_rdy,
+  input  mem_req_4B_t             memreq_msg,
 
-    output logic         memresp_val,
-    input  logic         memresp_rdy,
-    output mem_resp_4B_t memresp_msg,
+  output logic                    memresp_val,
+  input  logic                    memresp_rdy,
+  output mem_resp_4B_t            memresp_msg,
 
-    //cache
-    output logic        cache_req_val,
-    input  logic        cache_req_rdy,
-    output mem_req_4B_t cache_req_msg,
+  //cache
+  output  logic                    cache_req_val,
+  input   logic                    cache_req_rdy,
+  output  mem_req_4B_t             cache_req_msg,
+ 
+  input  logic                     cache_resp_val,
+  output logic                     cache_resp_rdy,
+  input  mem_resp_4B_t             cache_resp_msg,
 
-    input  logic         cache_resp_val,
-    output logic         cache_resp_rdy,
-    input  mem_resp_4B_t cache_resp_msg,
 
-
-    // flush
-    input  logic flush,
-    output logic flush_done
-
-    // ctrl to data-path
-    input  logic         reg_en_M0;
-    input  logic         reg_en_M1;
+  // flush
+  input logic                     flush,
+  output logic                    flush_done
 );
 
-  assign cache_req_val = memreq_val;
-  assign memreq_rdy = cache_req_rdy;
-  assign cache_req_msg = memreq_msg;
+assign cache_req_val = memreq_val;
+assign memreq_rdy = cache_req_rdy;
+assign cache_req_msg = memreq_msg;
 
-  assign memresp_val = cache_resp_val;
-  assign cache_resp_rdy = memresp_rdy;
-  assign memresp_msg = cache_resp_msg;
+assign memresp_val = cache_resp_val;
+assign cache_resp_rdy = memresp_rdy;
+assign memresp_msg = cache_resp_msg;
 
-//--------------------------------------------------------------------
-// M0 stage
-//--------------------------------------------------------------------
+localparam tag_bits = 21; //# of tag bits
+localparam block_size = 64; //in bytes
+localparam index_bits = 5; // # index bits
+localparam offset_bits = 6; // # offset bits
 
-  // TODO : Split input signals into cache_req_addr
 
-  logic [31:0] cache_req_addr_M0;
+localparam word_size = 32;
+localparam num_lines = 32;
+localparam words_in_line = 2;
 
-  vc_EnResetReg #(32) cache_req_addr_reg_M0 (
-      .clk       (clk),
-      .reset     (reset),
-      .en        (reg_en_M0),
-      .d         (cache_req_addr),
-      .q         (cache_req_addr_M0)
-  );     
 
-  vc_EnResetReg #(32) cache_req_data_reg_M0 (
-      .clk       (clk),
-      .reset     (reset),
-      .en        (reg_en_M0),
-      .d         (cache_req_addr),
-      .q         (cache_req_addr_M0)
-  );     
+/*
 
-  vc_CombinationalBitSRAM_1rw #(32, 4) pc_incr_F
-  (
-      .clk       (clk),
-      .reset     (reset),
-      .read_en   (),
-      .read_addr (),
-      .read_data (), // output
-      .write_en  (),
-      .write_addr(),
-      .write_data()
-  );
+typedef struct packed {
+  logic [2:0]  type_;
+  logic [7:0]  opaque;
+  logic [31:0] addr;
+  logic [1:0]  len;
+  logic [31:0] data;
+} mem_req_4B_t;
 
-  vc_Mux4 #(32) pc_sel_mux_F
-  (
-    .in0  (pc_plus4_F),
-    .in1  (br_target_X),
-    .in2  (jal_target_D),
-    .in3  (jalr_target_X),
-    .sel  (pc_sel_F),
-    .out  (pc_next_F)
-  );
+*/
 
 
 
-//--------------------------------------------------------------------
-// M1 stage
-//--------------------------------------------------------------------
+logic [tag_bits-1:0] tag_addr;
+mem_req_4B_t memreq_msg_reg;
+
+always_ff (@posedge clk) begin 
+  if(reset) begin
+    memreq_msg_reg <= 0;
+  end
+  else begin
+    memreq_msg_reg <= memreq_msg;
+  end
+end
+
+//Cache memory
+logic [word_size-1:0] data_array [num_lines-1:0][words_in_line-1:0]
 
 
 
@@ -109,4 +93,4 @@ module lab3_cache_CacheBase (
 endmodule
 
 
-`endif  /* LAB3_CACHE_CACHE_BASE_V */
+`endif /* LAB3_CACHE_CACHE_BASE_V */
