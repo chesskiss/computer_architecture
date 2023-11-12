@@ -306,6 +306,7 @@ initial begin
   reset=1;
   mem_clear=1;
   #10
+  @(negedge clk)
   reset=0;
   mem_clear=0;
  
