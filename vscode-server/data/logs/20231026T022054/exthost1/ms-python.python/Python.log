@@ -1,7 +1,0 @@
-2023-10-26 02:33:43.389 [info] Experiment 'pythonaacf' is active
-2023-10-26 02:33:43.389 [info] Experiment 'pythonPromptNewFormatterExt' is active
-2023-10-26 02:33:43.389 [info] Experiment 'pythonPromptNewToolsExt' is active
-2023-10-26 02:33:43.389 [info] Experiment 'pythonTestAdapter' is active
-2023-10-26 02:33:43.918 [info] Test server listening.
-2023-10-26 02:33:43.919 [info] Python interpreter path: /classes/ece4750/install/stow-pkgs/x86_64-rhel7/bin/python3.7
-2023-10-26 02:33:46.022 [info] Starting Pylance language server.
