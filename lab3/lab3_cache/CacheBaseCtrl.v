@@ -20,13 +20,10 @@ module lab2_proc_ProcBaseCtrl
   output logic        reg_en_M1,
 
 // dpath-ctrl
-  input  logic        tarray_match
+  input  logic        tarray_match, //tag array
+  input  logic        dbit          //dirty bit
 
 );
-
-
-  logic  reg_en_M0;
-  logic  reg_en_M1;
 
   logic  ostall_M0; //stall if tag missed
   logic  ostall_M1; // do we need it?
@@ -59,8 +56,10 @@ module lab2_proc_ProcBaseCtrl
       */
       
       //step 2 : read from memory 
+      
 
     end
+  end
 
   //----------------------------------------------------------------------
   // M1 stage
