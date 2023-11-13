@@ -38,7 +38,8 @@ module cacheBaseDpath (
 localparam tag_bits = 21; //# of tag bits
 localparam block_size = 64; //in bytes
 localparam index_bits = 5; // # index bits
-localparam offset_bits = 6; // # offset bits
+localparam word_offset_bits = 4; // # word offset bits
+localparam byte_offset_bits = 2; // # word offset bits
 
 
 localparam word_size = 32;
@@ -49,6 +50,23 @@ localparam words_in_line = 2;
 
 
 logic [tag_bits-1:0] tag_addr;
+logic [index_bits-1:0] index; 
+logic [word_offset_bits:0] w_offset; 
+logic [byte_offset_bits-1:0] b_offset; 
+
+
+/*
+
+typedef struct packed {
+  logic [2:0]  type_;
+  logic [7:0]  opaque;
+  logic [31:0] addr;
+  logic [1:0]  len;
+  logic [31:0] data;
+} mem_req_4B_t;
+
+*/
+
 mem_req_4B_t memreq_msg_reg;
 
 always_ff (@posedge clk) begin 
@@ -60,8 +78,20 @@ always_ff (@posedge clk) begin
   end
 end
 
+assign tag_addr = memreq_msg_reg.addr[31:11];
+assign index = memreq_msg_reg.addr[10:6];
+assign w_offset = memreq_msg_reg.addr[5:2];
+assign b_offset = memreq_msg_reg.addr[1:0];
+
+
+
+
 //Cache memory
-logic [word_size-1:0] data_array [num_lines-1:0][words_in_line-1:0]
+logic [word_size-1:0] data_array [num_lines-1:0][words_in_line-1:0]lab2_proc_DropUnit
+
+
+
+
 
 always 
 
