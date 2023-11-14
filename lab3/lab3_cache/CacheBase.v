@@ -61,7 +61,7 @@ localparam index_bits = 5; // # index bits
 localparam offset_bits = 4; // # offset bits
 
 
-localparam word_size = 32;
+localparam line_size = 512; //size in bits
 localparam num_lines = 32;
 localparam words_in_line = 2;
 
@@ -81,8 +81,8 @@ typedef struct packed {
 //--------------------------------------------------------------------
 // M0 stage
 //--------------------------------------------------------------------
+logic dirty_bits[num_lines];
 
-logic [tag_bits-1:0] tag_addr;
 mem_req_4B_t memreq_msg_reg;
 //Cache memory
 logic [line_size-1:0]  data_array [num_lines-1:0][words_in_line-1:0];
@@ -99,9 +99,13 @@ always_ff (@posedge clk) begin
   end
 end
 
+//Cache memory
+logic [line_size-1:0] data_array [num_lines-1:0][words_in_line-1:0]
+
 //--------------------------------------------------------------------
 // M1 stage
 //--------------------------------------------------------------------
+
 
 
 endmodule
