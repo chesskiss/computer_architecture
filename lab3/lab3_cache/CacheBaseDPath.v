@@ -5,7 +5,7 @@
 `include "mux_16.v"
 `include "vc/srams.v"
 
-module cacheBaseDpath (
+module CacheBaseDpath (
     input logic clk, 
     input logic reset,
     
