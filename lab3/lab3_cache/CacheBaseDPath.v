@@ -157,6 +157,7 @@ vc_CombinationalSRAM_1rw #(512, 32) data_array
     .write_data    (data_array_write_value)
 );
 
+//todo - need to implement interaction with memory, and difference between write and read inst on refill
 
   vc_Mux16 #(32) read_word_mux
   (

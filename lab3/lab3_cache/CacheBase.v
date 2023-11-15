@@ -15,21 +15,21 @@ module lab3_cache_CacheBase
 
 
   // imem
-  input  logic                    memreq_val,
-  output logic                    memreq_rdy,
+  input  logic                    memreq_val, // proc. is making a request to the cache.
+  output logic                    memreq_rdy, // cache ready to receive request from proc
   input  mem_req_4B_t             memreq_msg,
 
-  output logic                    memresp_val,
-  input  logic                    memresp_rdy,
+  output logic                    memresp_val, // cache gave a valid response to proc.
+  input  logic                    memresp_rdy, // proc. ready to receive response from cache.
   output mem_resp_4B_t            memresp_msg,
 
   //cache
-  output  logic                    cache_req_val,
-  input   logic                    cache_req_rdy,
+  output  logic                    cache_req_val, // cache wants to make a request to mem
+  input   logic                    cache_req_rdy, // mem is ready to receive requests
   output  mem_req_4B_t             cache_req_msg,
  
-  input  logic                     cache_resp_val,
-  output logic                     cache_resp_rdy,
+  input  logic                     cache_resp_val, // mem gave a valid response to cache
+  output logic                     cache_resp_rdy, // cache is ready to receive response from memory.
   input  mem_resp_4B_t             cache_resp_msg,
 
   // flush

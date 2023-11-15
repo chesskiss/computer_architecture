@@ -5,50 +5,44 @@
 
 module CacheBaseCtrl (
     // Outer system signals
-    input logic                   clk,
-    input logic                   reset,
-    input logic                   flush,
-    output logic                  flush_done,
+    input   logic                   clk,
+    input   logic                   reset,
+    input   logic                   flush,
+    output  logic                   flush_done,
 
-    // Outputs to the cacheBaseDpath module (inputs of cacheBaseDpath)
-    output mem_req_4B_t           mem_req_msg,
-    output mem_resp_4B_t          cache_resp_msg,
-
-    // Inputs from the cacheBaseDpath module (outputs of cacheBaseDpath)
-    input mem_resp_4B_t           memresp_msg,
-    input mem_req_4B_t            cache_req_msg,
+    output logic                    memreq_rdy, // cache ready to receive request from proc
+    output  logic                   cache_req_val, // cache wants to make a request to mem
+    input   logic                   cache_req_rdy, // mem is ready to receive requests
 
     // Outputs of ctrl signals (inputs of cacheBaseDpath)
-    output logic                  memreq_en,
-    output logic                  cache_mem_en, 
-    output logic                  data_array_w_en,
-    output logic                  data_array_r_en,
-    output logic [2:0]            flush_counter,  
-    output logic                  data_array_write_mux_sel,
-    output logic                  tag_array_w_en,
-    output logic                  tag_array_r_en,
+    output  logic                  memreq_en,
+    output  logic                  data_array_w_en,
+    output  logic                  data_array_r_en,
+    output  logic [2:0]            flush_counter,  
+    output  logic                  data_array_write_mux_sel,
+    output  logic                  tag_array_w_en,
+    output  logic                  tag_array_r_en,
 
     // Inputs of ctrl signals (outputs of cacheBaseDpath)
-    input logic                                tag_array_match,
-    input logic [2**dirty_size-1:0]            dirty_bits,
-    input logic [dirty_size-1:0]               dirty_bit, // Sends the set of words that needs to be evicted. TODO: better change constant size to local/global param. 
-    input logic                                read,
-    input logic [2:0]                          cache_req_type //TODO - why do we need it?
-); // Ari, it was a horrible mistake to sit seperatly on this lab. I ended up wasting hours just on decoding your variable names and their meaning. TODO: Next lab we'll brief each other after each commit, and sit together to DRAW the diagram and understand ALL signals. Only then we start to work.
-
+    input logic                    tag_array_match,
+    input logic [line_num-1:0]     dirty_bits,
+    input logic [dirty_size-1:0]   dirty_bit, // Sends the set of words that needs to be evicted. TODO: better change constant size to local/global param. 
+    input logic                    read
+); //TODO: Next lab we'll brief each other after each commit, and sit together to DRAW the diagram and understand ALL signals. Only then we start to work.
 
   //state variables
   localparam tag_check          = 2'd0; // ready 
   localparam refill             = 2'd1; // if victim clean
   localparam evict              = 2'd2; // spill if dirty
-
   logic [1:0] current_state, next_state;
 
+  // data or sram-realted sizes
   localparam dirty_size = 3;
-  localparam words_num  = 16;
+  localparam line_num   = 8; // 2**dirty_size
+  localparam num_words_in_line  = 16;
 
-  logic [3:0] req_num;  // number of requests to mem during evict (counter reaches 15 when line evicted)
-  logic [3:0] resp_num; // number of responses from mem during refill (counter reaches 15 when line filled)
+  logic [3:0] sent_mem_req_num;      // number of requests to mem during evict (counter reaches 15 when line evicted)
+  logic [3:0] received_mem_resp_num; // number of responses from mem during refill (counter reaches 15 when line filled)
 
 // ==================================== Data Path signals =================================================
  // pins that are being activated
@@ -92,11 +86,11 @@ module CacheBaseCtrl (
   always_comb begin
     case (current_state)
       tag_check: begin
-        if (flush) begin 
+        if (flush & !flush_done) begin  // todo in datapath - if flush asserted and flush is done do nothing (like reset). 
           next_state = evict; 
         end 
         else if (tag_array_match) begin  // same cycle for tag check and DA
-          next_state = tag_check;  
+          next_state = tag_check;
         end 
         else if (dirty_bits[dirty_bit]) begin  // read/write miss dirty 
           next_state = evict; 
@@ -106,16 +100,19 @@ module CacheBaseCtrl (
         end 
       end  
       evict: begin 
-        if (flush && flush_counter < 7) begin 
+        if ((flush && !flush_done) || sent_mem_req_num < num_words_in_line) begin  //todo flush asserted only for 1 cycle should still keep evicting after
           next_state = evict; 
         end 
+        else if (flush_done) begin // in flush, we don't neet to go to refill
+          next_state = tag_check;
+        end
         else begin  // done writing back (evicting) cache line to memory 
           next_state = refill; 
         end 
       end 
       refill: begin 
-        if (resp_num == words_num-1) begin 
-          next_state = tag_check; 
+        if (received_mem_resp_num < num_words_in_line) begin 
+          next_state = refill; 
         end 
         else begin 
           next_state = tag_check; 
@@ -127,51 +124,56 @@ module CacheBaseCtrl (
   end
 // ============================================================================================================
 
-
+// =================================== Sequential Logic =======================================================
   always_ff @(posedge clk) begin
     if (reset) begin
       current_state           <= tag_check;
       flush_counter           <= 0; 
+      sent_mem_req_num        <= 0;
+      received_mem_resp_num   <= 0;
       flush_done              <= 0; 
+      flush_flag              <= 0;
+      memreq_rdy              <= 0;
     end
     else begin
       if (current_state == tag_check) begin 
-        memreq_rdy            <= 1; // cache_req_rdy && cache_resp_val determines done accessing data from memory 
-        memresp_val           <= 1; 
-        flush_counter    <= 0; // reset the counter when not in evict or refill state 
+        flush_counter         <= 0; // reset the counter when not in evict or refill state 
+        sent_mem_req_num      <= 0;
+        reqsp_num             <= 0;
+        received_mem_resp_num <= 0;
+        flush_flag            <= flush; // once flush is asserted we keep the flag up until evicting is concluded
+        flush_done            <= flush ? flush_done : 0; // if flush has gone then reset. Otherwise keep value
+        memreq_rdy            <= 1; // cache is ready to receive reqs from proc
+
+        if ((flush && !flush_done) || !tag_array_match && (read || dirty_bits[dirty_bit])) begin //if we flush or miss with read or write dirty
+          cache_req_val       <= 1; // next cycle we'll be sending requests to mem
+        end
       end  
       if (current_state == evict) begin 
-        if (cache_req_val && cache_req_rdy) begin   // keeping track of requests sent
-          flush_counter  <= flush_counter + 1;  // TODO : optional - skip cycles for blocks that are clean
+        if (cache_req_rdy) begin   // if memory ready to accept 
+          if (sent_mem_req_num < num_words_in_line && ((dirty_bits[flush_counter] && flush_flag) || !flush_flag)) begin // skip clean lines on flush. If didn't evict entire line keep going. If not flush then there is a dirty bit (no need to check)
+            sent_mem_req_num              <= sent_mem_req_num + 1; 
+          end
+          else if (flush_flag && flush_counter < num_lines) begin //if line was evicted, go to the next line 
+            flush_counter                 <= flush_counter + 1; 
+          end
+          else if (flush) begin // finished evicting all dirty bits
+            flush_done                    <= 1;
+          end 
         end
-                  // why do we need these 3 lines? TODO
-                                                                              // if (cache_resp_val && cache_resp_rdy) begin // keeping track of responses received 
-                                                                              //   counter2 <= counter2 + 1; 
-                                                                              // end 
-        if (flush_counter == 7) begin // finished evicting all dirty bits
-          flush_done          <= 1;
-          flush_counter       <= 0;  
-        end 
-        cache_req_val         <= 1; 
-        cache_resp_rdy        <= 1;
       end 
       if (current_state == refill) begin 
-        if (cache_req_val && cache_req_rdy) begin   // keeping track of requsts sent
-          flush_counter       <= flush_counter + 1; 
+        if (cache_req_rdy && read) begin   // if mem is ready on a read inst. on write no need to access mem.
+          received_mem_resp_num           <= received_mem_resp_num + 1;
         end
-        if (counter == 15 && counter2 == 15) begin 
-          counter             <= 0;  
-        end 
-        // if (cache_req_type) begin // if the type is a write then you need to send a processor response ?? 
-        //   memreq_rdy  <= 1; 
-        //   memresp_val <= 1; 
-        // end 
-        cache_req_val  <= 1; 
-        cache_resp_rdy <= 1; 
+        else if (!read) begin //todo - double check if on write we need only one cycle to write 1 word?
+          received_mem_resp_num           <= num_words_in_line; // if we write then 1 cycle is enough since we're writing 1 word.
+        end
       end 
-        current_state  <= next_state; 
+        current_state                     <= next_state; 
     end 
   end
+// ============================================================================================================
 
 endmodule
 
