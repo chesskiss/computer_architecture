@@ -35,7 +35,7 @@ module CacheBaseDpath (
 
     //dpath-ctrl signals        
     output logic                  tag_array_match,
-    output logic [7:0]            dirty_bits,
+    output logic [2**index_bits-1:0]            dirty_bits,
     output logic [dirty_size-1:0] dirty_bit,
     output logic                  read,
     output logic [2:0]            cache_req_type
@@ -55,10 +55,10 @@ localparam words_in_line      = 2;
 logic [tag_bits-1:0]         tag_val;
 logic [index_bits-1:0]       index; 
 logic [word_offset_bits:0]   w_offset; 
-logic [byte_offset_bits-1:0] b_offset; 
+logic [byte_offset_bits-1:0] b_offset;  // todo: why do we need this? ...
 
 logic [4:0]                  shift_amount = flush_counter*4;
-logic [63:0]                 one_hot_line_encodings = 64'd15 << shift_amount; 
+logic [63:0]                 one_hot_line_encodings = read ? 64'd15 << shift_amount : w_offset; 
               
 logic [511:0]                read_data_value;
 logic [511:0]                write_data_value;
@@ -147,12 +147,12 @@ vc_CombinationalSRAM_1rw #(512, 32) data_array
     .clk           (clk),
     .reset         (reset),
 
-    .read_en       (data_array_r_en),
+    .read_en       (data_array_r_en), 
     .read_addr     (index),
     .read_data     (read_data_values),
 
     .write_en      (data_array_w_en),
-    .write_byte_en (one_hot_line_encodings),
+    .write_byte_en (one_hot_line_encodings), // todo - looking at the diagram, there's also a word en mux?  I embedded in the var the option
     .write_addr    (index),
     .write_data    (data_array_write_value)
 );

@@ -29,11 +29,11 @@ module CacheBaseCtrl (
     output logic                  tag_array_r_en,
 
     // Inputs of ctrl signals (outputs of cacheBaseDpath)
-    input logic                  tag_array_match,
-    input logic [7:0]            dirty_bits,
-    input logic [2:0]            dirty_bit, // Sends the set of words that needs to be evicted. TODO: better change constant size to local/global param. 
-    input logic                  read,
-    input logic [2:0]            cache_req_type //TODO - why do we need it?
+    input logic                                tag_array_match,
+    input logic [2**dirty_size-1:0]            dirty_bits,
+    input logic [dirty_size-1:0]               dirty_bit, // Sends the set of words that needs to be evicted. TODO: better change constant size to local/global param. 
+    input logic                                read,
+    input logic [2:0]                          cache_req_type //TODO - why do we need it?
 ); // Ari, it was a horrible mistake to sit seperatly on this lab. I ended up wasting hours just on decoding your variable names and their meaning. TODO: Next lab we'll brief each other after each commit, and sit together to DRAW the diagram and understand ALL signals. Only then we start to work.
 
 
@@ -43,6 +43,12 @@ module CacheBaseCtrl (
   localparam evict              = 2'd2; // spill if dirty
 
   logic [1:0] current_state, next_state;
+
+  localparam dirty_size = 3;
+  localparam words_num  = 16;
+
+  logic [3:0] req_num;  // number of requests to mem during evict (counter reaches 15 when line evicted)
+  logic [3:0] resp_num; // number of responses from mem during refill (counter reaches 15 when line filled)
 
 // ==================================== Data Path signals =================================================
  // pins that are being activated
@@ -72,9 +78,9 @@ module CacheBaseCtrl (
   always_comb begin
     case ( current_state )  
       //                          memreq_en    t_en    t_wen     d_en     d_wen     d_write_mux    
-      tag_check:                cs( 0,          1,       1,       1,        1,           0); // TODO: we have a problem. We cannot put d_wen here bc it has to depend on dirty bits.
+      tag_check:                cs( 0,          1,       1,       1,        1,           0);
       evict:                    cs( 1,          0,       1,       1,        0,           0); 
-      refill:                   cs( 0,          0,       1,       1,        1,           1); 
+      refill:                   cs( 1,          0,       1,       1,        1,           1); 
 
       default:                  cs('x,         'x,      'x,      'x,       'x,          'x);    //this state is never reached
     endcase
@@ -82,7 +88,7 @@ module CacheBaseCtrl (
 
 // ============================================================================================================
 
- // ==================================== Combination for State Transitions ====================================
+// ==================================== Combination for State Transitions =====================================
   always_comb begin
     case (current_state)
       tag_check: begin
@@ -100,28 +106,19 @@ module CacheBaseCtrl (
         end 
       end  
       evict: begin 
-        if (flush) begin 
+        if (flush && flush_counter < 7) begin 
           next_state = evict; 
         end 
-        else if (flush_counter == 7 && read) begin  // done writing back (evicting) cache line to memory 
+        else begin  // done writing back (evicting) cache line to memory 
           next_state = refill; 
         end 
-        else if (req_count < 15) begin  // cache not done flushing and sending/receiving requests still keep evicting the cache line 
-          next_state = evict; 
-        end
-        else begin
-          next_state = evict;          // on write command we need not to refill
-        end
       end 
       refill: begin 
-        if (flush) begin 
-          next_state = evict; 
-        end 
-        else if (req_count == 15) begin 
+        if (resp_num == words_num-1) begin 
           next_state = tag_check; 
         end 
-        else if (req_count < 15) begin 
-          next_state = refill; 
+        else begin 
+          next_state = tag_check; 
         end 
       end 
       default: begin
