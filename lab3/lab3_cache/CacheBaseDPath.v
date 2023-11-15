@@ -35,7 +35,8 @@ module CacheBaseDpath (
 
     //dpath-ctrl signals        
     output logic                  tag_array_match,
-    output logic [7:0]            dirty_bits, // TODO : decide if dirty bit are in ctrl or dpath because of flush.
+    output logic [7:0]            dirty_bits,
+    output logic [dirty_size-1:0] dirty_bit,
     output logic                  read,
     output logic [2:0]            cache_req_type
 );
@@ -107,7 +108,7 @@ assign index      = memreq_msg_reg.addr[10:6];
 assign w_offset   = memreq_msg_reg.addr[5:2];
 assign b_offset   = memreq_msg_reg.addr[1:0];
 
-assign [dirty_size] dirty_bit  = index >> 2; // we need dirty bit only for 1 size
+assign dirty_bit  = index >> 2; // we need dirty bit only for 1 size
 
 logic [tag_bits-1:0] read_tag_data;
 

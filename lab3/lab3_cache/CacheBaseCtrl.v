@@ -23,7 +23,7 @@ module CacheBaseCtrl (
     output logic                  cache_mem_en, 
     output logic                  data_array_w_en,
     output logic                  data_array_r_en,
-    output logic [2:0]            dirty_bits_counter,  
+    output logic [2:0]            flush_counter,  
     output logic                  data_array_write_mux_sel,
     output logic                  tag_array_w_en,
     output logic                  tag_array_r_en,
@@ -33,9 +33,8 @@ module CacheBaseCtrl (
     input logic [7:0]            dirty_bits,
     input logic [2:0]            dirty_bit, // Sends the set of words that needs to be evicted. TODO: better change constant size to local/global param. 
     input logic                  read,
-    input logic [2:0]            cache_req_type
-); // Ari, it was a horrible mistake to sit seperatly on this lab. I ended up wasting hours just on decoding your variable names and their meaning. TODO: Next lab we'll sit together to DRAW the diagram and understand ALL signals. Only then we start to work.
-// todo: add flush counter - go over all bits in flush. like counter2, counter...
+    input logic [2:0]            cache_req_type //TODO - why do we need it?
+); // Ari, it was a horrible mistake to sit seperatly on this lab. I ended up wasting hours just on decoding your variable names and their meaning. TODO: Next lab we'll brief each other after each commit, and sit together to DRAW the diagram and understand ALL signals. Only then we start to work.
 
 
   //state variables
@@ -104,7 +103,7 @@ module CacheBaseCtrl (
         if (flush) begin 
           next_state = evict; 
         end 
-        else if (dirty_bits_counter == 7 && read) begin  // done writing back (evicting) cache line to memory 
+        else if (flush_counter == 7 && read) begin  // done writing back (evicting) cache line to memory 
           next_state = refill; 
         end 
         else if (req_count < 15) begin  // cache not done flushing and sending/receiving requests still keep evicting the cache line 
@@ -135,48 +134,45 @@ module CacheBaseCtrl (
   always_ff @(posedge clk) begin
     if (reset) begin
       current_state           <= tag_check;
-      dirty_bits_counter      <= 0; 
+      flush_counter           <= 0; 
       flush_done              <= 0; 
     end
     else begin
       if (current_state == tag_check) begin 
         memreq_rdy            <= 1; // cache_req_rdy && cache_resp_val determines done accessing data from memory 
         memresp_val           <= 1; 
-        dirty_bits_counter    <= 0; // reset the counter when not in evict or refill state 
+        flush_counter    <= 0; // reset the counter when not in evict or refill state 
       end  
       if (current_state == evict) begin 
         if (cache_req_val && cache_req_rdy) begin   // keeping track of requests sent
-          dirty_bits_counter  <= dirty_bits_counter + 1;  // TODO : currently it writes back ALL blocks on flush. Need to ask if writing only dirty blocks is a requirement.
+          flush_counter  <= flush_counter + 1;  // TODO : optional - skip cycles for blocks that are clean
         end
                   // why do we need these 3 lines? TODO
                                                                               // if (cache_resp_val && cache_resp_rdy) begin // keeping track of responses received 
                                                                               //   counter2 <= counter2 + 1; 
                                                                               // end 
-        if (dirty_bits_counter == 7) begin // finished evicting all dirty bits
+        if (flush_counter == 7) begin // finished evicting all dirty bits
           flush_done          <= 1;
-          dirty_bits_counter  <= 0;  
+          flush_counter       <= 0;  
         end 
         cache_req_val         <= 1; 
         cache_resp_rdy        <= 1;
       end 
       if (current_state == refill) begin 
         if (cache_req_val && cache_req_rdy) begin   // keeping track of requsts sent
-          req_count           <= req_count + 1; 
+          flush_counter       <= flush_counter + 1; 
         end
-        if (cache_resp_val && cache_resp_rdy) begin // keeping track of reqests received 
-          resp_count <= resp_count + 1; 
-        end 
         if (counter == 15 && counter2 == 15) begin 
-          counter <= 0;  
+          counter             <= 0;  
         end 
         // if (cache_req_type) begin // if the type is a write then you need to send a processor response ?? 
         //   memreq_rdy  <= 1; 
         //   memresp_val <= 1; 
         // end 
-        cache_req_val <= 1; 
+        cache_req_val  <= 1; 
         cache_resp_rdy <= 1; 
       end 
-        current_state <= next_state; 
+        current_state  <= next_state; 
     end 
   end
 
