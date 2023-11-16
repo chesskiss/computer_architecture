@@ -33,7 +33,7 @@ module lab2_proc_ProcAltDpath
 
   output logic [31:0]  dmem_reqstream_msg_addr,
   input  logic [31:0]  dmem_respstream_msg_data,
-output logic [31:0]  dmemreq_msg_data,
+  output logic [31:0]  dmemreq_msg_data,
 
   // mngr communication ports
 
