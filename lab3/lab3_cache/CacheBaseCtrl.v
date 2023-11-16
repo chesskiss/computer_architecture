@@ -103,7 +103,7 @@ module CacheBaseCtrl (
           else if (tag_array_match) begin  // same cycle for tag check and DA
             next_state  = tag_check;
             memresp_val = tag_array_match; //we'll give a valid respone to proc. only if tag matches.
-            memreq_rdy  = memresp_rdy & memresp_val || !memresp_val; // cache is ready to receive reqs from proc only if finished with previous req
+            memreq_rdy  = (memresp_rdy & memresp_val) || !memresp_val; // cache is ready to receive reqs from proc only if finished with previous req
           end 
           else if (dirty_bits[dirty_bit]) begin  // read/write miss dirty 
             next_state  = evict; 
