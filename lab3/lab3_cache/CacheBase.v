@@ -7,7 +7,7 @@
 
 `include "vc/mem-msgs.v"
 `include "vc/regs.v"
-`include "CacheBaseDpath.v"
+`include "CacheBaseDPath.v"
 `include "CacheBaseCtrl.v"
 
 module lab3_cache_CacheBase
