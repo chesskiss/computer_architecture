@@ -36,7 +36,7 @@ module CacheBaseCtrl (
     // Inputs of ctrl signals (outputs of cacheBaseDpath)
     input logic                    tag_array_match,
     input logic [line_num-1:0]     dirty_bits,
-    input logic [dirty_size-1:0]   dirty_bit, // Sends the set of words that needs to be evicted. TODO: better change constant size to local/global param. 
+    input logic [dirty_size-1:0]   dirty_bit, // Sends the set of words that needs to be evicted. 
     input logic                    read
 ); //TODO: Next lab we'll brief each other after each commit, and sit together to DRAW the diagram and understand ALL signals. Only then we start to work.
 
@@ -51,7 +51,7 @@ module CacheBaseCtrl (
   localparam line_num   = 8; // 2**dirty_size
   localparam num_words_in_line  = 16;
 
-  logic [3:0] sent_mem_req_num;     // number of requests to mem during evict (counter reaches 15 when line evicted)
+\  logic [3:0] sent_mem_req_num;     // number of requests to mem during evict (counter reaches 15 when line evicted)
 
 //todo all val rdy req resolve.
 // ==================================== Data Path signals =================================================
@@ -96,7 +96,7 @@ module CacheBaseCtrl (
   always_comb begin
     case (current_state)
       tag_check: begin
-        if (memreq_val) begin
+        if (memreq_val) begin //if proc. sent req
           if (flush & !flush_done) begin  // todo in datapath - if flush asserted and flush is done do nothing (like reset). 
             next_state  = evict; 
           end 
@@ -114,7 +114,7 @@ module CacheBaseCtrl (
         end
       end  
       evict: begin 
-        if ((flush && !flush_done) || sent_mem_req_num < num_words_in_line) begin  //todo flush asserted only for 1 cycle should still keep evicting after
+        if ((flush_flag && !flush_done) || sent_mem_req_num < num_words_in_line) begin
           next_state = evict; 
         end 
         else if (flush_done) begin // in flush, we don't neet to go to refill
@@ -148,19 +148,20 @@ module CacheBaseCtrl (
       flush_done                          <= 0; 
       flush_flag                          <= 0;
       memreq_rdy                          <= 0;
+      req_exists                          <= 0;
     end
     else begin
       if (current_state == tag_check) begin //todo think about converting some of the signals to combinational logic ?
-        flush_counter                     <= 0; // reset the counter when not in evict or refill state 
+        flush_counter                     <= 0; // reset the counter when not in evict or refill state. Same for the rest.
         sent_mem_req_num                  <= 0;
         reqsp_num                         <= 0;
         received_mem_resp_num             <= 0;
         flush_flag                        <= flush; // once flush is asserted we keep the flag up until evicting is concluded
-        flush_done                        <= flush ? flush_done : 0;    // if flush has gone then reset. Otherwise keep value
+        flush_done                        <= flush ? flush_done : 0;    // if flush is gone then reset. Otherwise retain value
         if ((flush && !flush_done) || !tag_array_match && (read || dirty_bits[dirty_bit])) begin //if we flush or miss with read or write dirty
           cache_req_val                   <= 1; // next cycle we'll be sending requests to mem
         end
-
+        memreq_rdy                        <= 1;
       end  
       if (current_state == evict) begin 
         memreq_rdy                        <= 0;
@@ -173,12 +174,12 @@ module CacheBaseCtrl (
           end
           else if (flush) begin // finished evicting all dirty bits
             flush_done                    <= 1;
+            flush_flag                    <= 0;
           end 
         end
       end 
       if (current_state == refill) begin 
         memreq_rdy                        <= 0;
-        request_exists                    <= 1;
         if (cache_req_rdy && read) begin   // if mem is ready on a read inst. on write no need to access mem.
           received_mem_resp_num           <= received_mem_resp_num + 1;
         end

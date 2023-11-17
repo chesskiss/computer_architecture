@@ -180,10 +180,10 @@ module vc_MemReqMsg16BTrace
 
   // Short names
 
-  localparam c_msg_nbits = $bits(mem_req_16B_t);
-  localparam c_read      = `VC_MEM_REQ_MSG_TYPE_READ;
-  localparam c_write     = `VC_MEM_REQ_MSG_TYPE_WRITE;
-  localparam c_write_init  = `VC_MEM_REQ_MSG_TYPE_WRITE_INIT;
+  localparam c_msg_nbits    = $bits(mem_req_16B_t);
+  localparam c_read         = `VC_MEM_REQ_MSG_TYPE_READ;
+  localparam c_write        = `VC_MEM_REQ_MSG_TYPE_WRITE;
+  localparam c_write_init   = `VC_MEM_REQ_MSG_TYPE_WRITE_INIT;
 
   // Line tracing
 

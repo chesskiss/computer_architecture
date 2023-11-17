@@ -43,34 +43,43 @@ localparam byte_offset_bits   = 2;              // # word offset bits
 localparam dirty_size         = index_bits - 2; // we have 1 dirty bit for every 4 words
 
 localparam word_size          = 32;
+localparam num_bits_in_line   = 512;
 localparam num_lines          = 32;
 localparam words_in_line      = 2;
 
-logic [tag_bits-1:0]          tag_val;
+logic [tag_bits-1:0]          tag_value;
 logic [index_bits-1:0]        index; 
 logic [word_offset_bits-1:0]  w_offset; 
-logic [byte_offset_bits-1:0]  b_offset;  // todo: why do we need this? ...  
+logic [byte_offset_bits-1:0]  b_offset;               // not being used
 
 logic [4:0]                   shift_amount = received_mem_resp_num*4; // we'll use it only if refill from memory
-logic [63:0]                  one_hot_line_encodings = read ? 64'd15 << shift_amount : 64'd15 << w_offset; // if read we're in refill stage -> bring entire line from mem. If write only 1 word
+logic [block_size-1:0]        one_hot_line_encodings = read ? 64'd15 << shift_amount : 64'd15 << w_offset; // if read we're in refill stage -> bring entire line from mem. If write only 1 word
 
-logic [511:0]                 read_data_values;   //from data sram
-logic [511:0]                 write_data_value;   //to data sram //todo change all constant values to params
+logic [num_bits_in_line-1:0]  read_data_values;       //from data sram
+logic [num_bits_in_line-1:0]  write_data_value;       //to data sram
 
-logic [31:0]                  data_array_val_32;  // output of data_array_write_mux
-logic [tag_bits-1:0]          read_tag_data;      //tag output
+logic [word_size-1:0]         data_array_val_32;      // output of data_array_write_mux
+logic [tag_bits-1:0]          read_tag_data;          //tag output
 
-logic [31:0]                  data_from_mem;
+logic [word_size-1:0]         data_from_mem;
 
-assign dirty_bit  = index >> 2;                   // we need dirty bit only for 1 size
+assign dirty_bit  = index >> 2;                       // we need dirty bit only for 1 size
 
 assign read = (cache_req_msg.type_ != `VC_MEM_REQ_MSG_TYPE_WRITE);
 
-assign tag_array_match = (read_tag_data == tag_val); //Tag comparison
+assign tag_array_match  = (read_tag_data == tag_value);  //Tag comparison
 
 assign write_data_value = {16{data_array_val_32}};
 
 /**************************
+typedef struct packed {
+  logic [2:0]  type_;
+  logic [7:0]  opaque;
+  logic [1:0]  test;
+  logic [1:0]  len;
+  logic [31:0] data;
+} mem_resp_4B_t;
+
 typedef struct packed {
   logic [2:0]  type_;
   logic [7:0]  opaque;
@@ -79,25 +88,24 @@ typedef struct packed {
   logic [31:0] data;
 } mem_req_4B_t;
 **************************/
-// addr msg decoding
-assign tag_addr   = cache_req_msg.addr[31:11];
-assign index      = cache_req_msg.addr[10:6];
-assign w_offset   = cache_req_msg.addr[5:2];
-assign b_offset   = cache_req_msg.addr[1:0];
+// decode proc. msg addr
+assign tag_value          = cache_req_msg.addr[31:11];
+assign index              = cache_req_msg.addr[10:6];
+assign w_offset           = cache_req_msg.addr[5:2];
+assign b_offset           = cache_req_msg.addr[1:0];
 
-// assign values to msg to proc. (all same)
-assign memresp_msg.type_    = memreq_msg.type_;
-assign memresp_msg.opaque   = memreq_msg.opaque;
-assign memresp_msg.len      = memreq_msg.len;
-assign memresp_msg.addr     = memreq_msg.addr;
+assign memresp_msg.type_  = cache_req_msg.type_;
+assign memresp_msg.opaque = cache_req_msg.opaque;
+assign memresp_msg.addr   = cache_req_msg.addr;
+assign memresp_msg.len    = cache_req_msg.len;
 
 vc_EnResetReg#(77) cache_req_addr_reg
   (
     .clk    (clk),
     .reset  (reset),
     .en     (memreq_rdy),         //receive cache req only if cache is ready
-    .d      (mem_req_msg),
-    .q      (cache_req_msg) // output = memory from proc.
+    .d      (mem_req_msg),        // msg from proc.
+    .q      (cache_req_msg)       // output = write data from proc.
   );
 
 vc_EnResetReg#(32) mem_resp_data_reg
@@ -120,14 +128,14 @@ vc_CombinationalBitSRAM_1rw #(21, 32) tag_array
 
     .write_en      (tag_array_w_en),
     .write_addr    (index),
-    .write_data    (tag_val)
+    .write_data    (tag_value)
 );
 
 // choose between memory (if read & refill) or data from proc. (if write)
 vc_Mux2 #(32) data_array_write_mux
 (
-    .in0           (cache_req_msg.data),
-    .in1           (cache_req_msg),
+    .in0           (cache_req_msg.data),        //from proc. reg (on write)
+    .in1           (cache_resp_msg.data),       //from memory
     .sel           (data_array_write_mux_sel),
     .out           (data_array_val_32)
 );
