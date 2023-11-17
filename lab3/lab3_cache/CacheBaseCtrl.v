@@ -51,7 +51,7 @@ module CacheBaseCtrl (
   localparam line_num   = 8; // 2**dirty_size
   localparam num_words_in_line  = 16;
 
-\  logic [3:0] sent_mem_req_num;     // number of requests to mem during evict (counter reaches 15 when line evicted)
+  logic [3:0] sent_mem_req_num;     // number of requests to mem during evict (counter reaches 15 when line evicted)
 
 //todo all val rdy req resolve.
 // ==================================== Data Path signals =================================================
