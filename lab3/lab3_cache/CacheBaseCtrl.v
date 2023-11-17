@@ -35,8 +35,7 @@ module CacheBaseCtrl (
 
     // Inputs of ctrl signals (outputs of cacheBaseDpath)
     input logic                    tag_array_match,
-    input logic [line_num-1:0]     dirty_bits,
-    input logic [dirty_size-1:0]   dirty_bit, // Sends the set of words that needs to be evicted. 
+    input logic [index_bits-1:0]   index,           // number of line we're looking at
     input logic                    read
 ); //TODO: Next lab we'll brief each other after each commit, and sit together to DRAW the diagram and understand ALL signals. Only then we start to work.
 
@@ -47,12 +46,13 @@ module CacheBaseCtrl (
   logic [1:0] current_state, next_state;
 
   // data or sram-realted sizes
-  localparam dirty_size = 3;
-  localparam line_num   = 8; // 2**dirty_size
+  localparam dirty_size         = 3;
+  localparam line_num           = 32;
+  localparam index_bits         = 5;
   localparam num_words_in_line  = 16;
 
-  logic [3:0] sent_mem_req_num;     // number of requests to mem during evict (counter reaches 15 when line evicted)
-
+  logic [3:0]             sent_mem_req_num;     // number of requests to mem during evict (counter reaches 15 when line evicted)
+  logic [line_num-1:0]    dirty_bits;
 //todo all val rdy req resolve.
 // ==================================== Data Path signals =================================================
  // pins that are being activated

@@ -29,8 +29,7 @@ module CacheBaseDpath (
 
     //dpath-ctrl signals              
     output logic                        tag_array_match,
-    output logic [2**index_bits-1:0]    dirty_bits,
-    output logic [dirty_size-1:0]       dirty_bit,
+    output logic [dirty_size-1:0]       index,
     output logic                        read                    // 1 if it's a read inst
 );
 
@@ -61,8 +60,6 @@ logic [word_size-1:0]         data_array_val_32;      // output of data_array_wr
 logic [tag_bits-1:0]          read_tag_data;          //tag output
 
 logic [word_size-1:0]         data_from_mem;
-
-assign dirty_bit  = index >> 2;                       // we need dirty bit only for 1 size
 
 assign read = (cache_req_msg.type_ != `VC_MEM_REQ_MSG_TYPE_WRITE);
 
