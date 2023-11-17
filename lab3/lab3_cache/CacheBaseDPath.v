@@ -22,7 +22,6 @@ module CacheBaseDpath (
     //ctrl-dpath signals        
     input logic                         data_array_w_en,
     input logic                         data_array_r_en,
-    input logic [dirty_size-1:0]        flush_counter,          // on flush we're going over all the dirty bites
     input logic                         data_array_write_mux_sel,
     input logic                         tag_array_w_en,
     input logic [3:0]                   received_mem_resp_num,  // number of responses from mem during refill (counter reaches 15 when line filled)
