@@ -5,7 +5,6 @@
 `include "vc/mem-msgs.v"
 `include "vc/arithmetic.v"
 `include "vc/regs.v"
-`include "vc/mux_16.v"
 `include "vc/srams.v"
 
 module CacheBaseDpath (
