@@ -34,8 +34,6 @@ module CacheBaseCtrl (
     output  logic                  tag_array_r_en,
     output  logic [3:0]            received_mem_resp_num, // number of responses from mem during refill (counter reaches 15 when line filled)
 
-    output  logic [dirty_size-1:0] flush_counter,  
-
     // Inputs of ctrl signals (outputs of cacheBaseDpath)
     input logic                    tag_array_match,
     input logic [index_bits-1:0]   index,           // number of line we're looking at
