@@ -27,7 +27,7 @@ module CacheBaseCtrl (
     output  logic                  memreq_en,
     output  logic                  data_array_w_en,
     output  logic                  data_array_r_en,
-    output  logic [2:0]            flush_counter,  
+    output  logic [dirty_size-1:0] flush_counter,  
     output  logic                  data_array_write_mux_sel,
     output  logic                  tag_array_w_en,
     output  logic                  tag_array_r_en,
@@ -54,6 +54,7 @@ module CacheBaseCtrl (
   logic [3:0]             sent_mem_req_num;     // number of requests to mem during evict (counter reaches 15 when line evicted)
   logic [num_lines-1:0]   dirty_bits;
   logic [num_lines-1:0]   valid_bits;
+  logic                   flush_flag;
 //todo all val rdy req resolve.
 // ==================================== Data Path signals =================================================
  // pins that are being activated
@@ -146,7 +147,6 @@ module CacheBaseCtrl (
       received_mem_resp_num               <= 0;
       flush_done                          <= 0; 
       flush_flag                          <= 0;
-      req_exists                          <= 0;
       memreq_rdy                          <= 1; //todo might make the read happen 1st cycle without problms- as on ed
       memresp_val                         <= 0;
       cache_resp_rdy                      <= 0;
@@ -156,7 +156,6 @@ module CacheBaseCtrl (
       if (current_state == tag_check) begin
         flush_counter                     <= 0; // reset the counter when not in evict or refill state. Same for the rest. //todo check counters if # correct
         sent_mem_req_num                  <= 0;
-        reqsp_num                         <= 0;
         received_mem_resp_num             <= 0;
         flush_flag                        <= flush; // once flush is asserted we keep the flag up until evicting is concluded
         flush_done                        <= flush ? flush_done : 0;    // if flush is gone then reset. Otherwise retain value
