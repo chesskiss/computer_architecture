@@ -47,13 +47,13 @@ module CacheBaseCtrl (
 
   // data or sram-realted sizes
   localparam dirty_size         = 3;
-  parameter line_num           = 32;
+  localparam num_lines          = 32;
   localparam index_bits         = 5;
   localparam num_words_in_line  = 16;
 
   logic [3:0]             sent_mem_req_num;     // number of requests to mem during evict (counter reaches 15 when line evicted)
-  logic [line_num-1:0]    dirty_bits;
-  logic [line_num-1:0]    valid_bits;
+  logic [num_lines-1:0]   dirty_bits;
+  logic [num_lines-1:0]   valid_bits;
 //todo all val rdy req resolve.
 // ==================================== Data Path signals =================================================
  // pins that are being activated
@@ -139,8 +139,8 @@ module CacheBaseCtrl (
   always_ff @(posedge clk) begin
     if (reset) begin
       current_state                       <= tag_check;
-      valid_bits                          <= num_lines'b0; //todo replace with lcoal param num_lines
-      dirty_bits                          <= num_lines'b0; //todo same
+      valid_bits                          <= 32'b0; //todo replace with lcoal param num_lines
+      dirty_bits                          <= 32'b0; //todo same
       flush_counter                       <= 0; 
       sent_mem_req_num                    <= 0;
       received_mem_resp_num               <= 0;
