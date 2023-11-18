@@ -47,7 +47,7 @@ module CacheBaseCtrl (
 
   // data or sram-realted sizes
   localparam dirty_size         = 3;
-  localparam line_num           = 32;
+  parameter line_num           = 32;
   localparam index_bits         = 5;
   localparam num_words_in_line  = 16;
 
