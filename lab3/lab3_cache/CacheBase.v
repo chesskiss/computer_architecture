@@ -81,7 +81,8 @@ localparam dirty_size         = 5;
         .memreq_en                (memreq_en),
         .data_array_w_en          (data_array_w_en),
         .data_array_r_en          (data_array_r_en),
-        // .flush_counter            (flush_counter),
+
+        //.flush_counter            (flush_counter),
         .data_array_write_mux_sel (data_array_write_mux_sel),
         .tag_array_w_en           (tag_array_w_en),
         .tag_array_r_en           (tag_array_r_en),
@@ -116,3 +117,4 @@ endmodule
 
 
 `endif /* LAB3_CACHE_CACHE_BASE_V */
+
