@@ -30,7 +30,7 @@ module CacheBaseDpath (
 
     //dpath-ctrl signals              
     output logic                        tag_array_match,
-    output logic [dirty_size-1:0]       index,
+    output logic [index_bits-1:0]       index,
     output logic                        read                    // 1 if it's a read inst
 );
 
@@ -39,7 +39,6 @@ localparam block_size         = 64;             // in bytes
 localparam index_bits         = 5;              // # index bits
 localparam word_offset_bits   = 4;              // # word offset bits
 localparam byte_offset_bits   = 2;              // # word offset bits
-localparam dirty_size         = index_bits - 2; // we have 1 dirty bit for every 4 words
 
 localparam word_size          = 32;
 localparam num_bits_in_line   = 512;
@@ -47,7 +46,6 @@ localparam num_lines          = 32;
 localparam words_in_line      = 2;
 
 logic [tag_bits-1:0]          tag_value;
-logic [index_bits-1:0]        index; 
 logic [word_offset_bits-1:0]  w_offset; 
 logic [byte_offset_bits-1:0]  b_offset;               // not being used
 
@@ -119,7 +117,7 @@ vc_CombinationalBitSRAM_1rw #(21, 32) tag_array
     .clk           (clk),
     .reset         (reset),
 
-    .read_en       (tag_array_en),
+    .read_en       (data_array_r_en),
     .read_addr     (index),
     .read_data     (read_tag_data),
 
