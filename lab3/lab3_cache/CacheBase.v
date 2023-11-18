@@ -39,20 +39,14 @@ module lab3_cache_CacheBase
   output logic                     flush_done
 );
 
-//todo rewrite memory access in processor and copy mem access to here and change names ? Wait for Ed
+// assign cache_req_val = memreq_val;
+// assign memreq_rdy = cache_req_rdy;
+// assign cache_req_msg = memreq_msg;
 
-assign cache_req_val = memreq_val;
-assign memreq_rdy = cache_req_rdy;
-assign cache_req_msg = memreq_msg;
-
-assign memresp_val = cache_resp_val;
-assign cache_resp_rdy = memresp_rdy;
-assign memresp_msg = cache_resp_msg;
+// assign memresp_val = cache_resp_val;
+// assign cache_resp_rdy = memresp_rdy;
+// assign memresp_msg = cache_resp_msg;
 // todo replace these assign signals
-
-
-//Fix the signal declaration types todo
-//Seems a bunch of control signals not used by datapath 
 
   logic memreq_en, data_array_w_en, data_array_r_en;
   logic [2:0] flush_counter;
@@ -96,9 +90,9 @@ assign memresp_msg = cache_resp_msg;
     CacheBaseDpath cache_base_dpath(
         .clk                      (clk),
         .reset                    (reset),
-        .memreq_rdy               (dmem_reqstream_rdy),
+        .memreq_rdy               (memreq_rdy),
         .cache_resp_rdy           (cache_resp_rdy),
-        .mem_req_msg              (mem_req_msg),
+        .mem_req_msg              (memreq_msg),
         .cache_resp_msg           (cache_resp_msg),
         .memresp_msg              (memresp_msg),
         .cache_req_msg            (cache_req_msg),
