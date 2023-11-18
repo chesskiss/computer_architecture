@@ -51,7 +51,7 @@ logic [byte_offset_bits-1:0]  b_offset;               // not being used
 
 logic [4:0]                   shift_amount = received_mem_resp_num*4; // we'll use it only if refill from memory
 logic [block_size-1:0]        one_hot_line_encodings = read ? 64'd15 << shift_amount : 64'd15 << w_offset; // if read we're in refill stage -> bring entire line from mem. If write only 1 word
-// todo make sure evict and refill are only on one stage
+
 logic [num_bits_in_line-1:0]  read_data_values;       //from data sram
 logic [num_bits_in_line-1:0]  write_data_value;       //to data sram
 
