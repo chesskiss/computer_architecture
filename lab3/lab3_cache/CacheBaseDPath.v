@@ -22,15 +22,13 @@ module CacheBaseDpath (
     //ctrl-dpath signals        
     input logic                         data_array_w_en,
     input logic                         data_array_r_en,
-    input logic [dirty_size-1:0]        flush_counter,          // on flush we're going over all the dirty bites
     input logic                         data_array_write_mux_sel,
     input logic                         tag_array_w_en,
     input logic [3:0]                   received_mem_resp_num,  // number of responses from mem during refill (counter reaches 15 when line filled)
 
     //dpath-ctrl signals              
     output logic                        tag_array_match,
-    output logic [2**index_bits-1:0]    dirty_bits,
-    output logic [dirty_size-1:0]       dirty_bit,
+    output logic [dirty_size-1:0]       index,
     output logic                        read                    // 1 if it's a read inst
 );
 
@@ -61,8 +59,6 @@ logic [word_size-1:0]         data_array_val_32;      // output of data_array_wr
 logic [tag_bits-1:0]          read_tag_data;          //tag output
 
 logic [word_size-1:0]         data_from_mem;
-
-assign dirty_bit  = index >> 2;                       // we need dirty bit only for 1 size
 
 assign read = (cache_req_msg.type_ != `VC_MEM_REQ_MSG_TYPE_WRITE);
 

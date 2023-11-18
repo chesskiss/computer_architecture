@@ -51,27 +51,72 @@ assign memresp_msg = cache_resp_msg;
 // todo replace these assign signals
 
 
+//Fix the signal declaration types todo
+//Seems a bunch of control signals not used by datapath 
+
+  logic clk, reset, flush, flush_done;
+  logic memreq_val, memreq_rdy;
+  logic memresp_val, memresp_rdy;
+
+
+  logic cache_req_val, cache_req_rdy;
+  logic cache_resp_val, cache_resp_rdy;
+  logic memreq_en, data_array_w_en, data_array_r_en;
+  logic [2:0] flush_counter;
+  logic data_array_write_mux_sel, tag_array_w_en, tag_array_r_en;
+  logic [3:0] received_mem_resp_num;
+  logic tag_array_match;
+  logic [index_bits-1:0] index;
+  logic read;
+
+
 // todo - fix and add dpath
-  lab3_cache_CacheBaseCtrl ctrl
-  (
-    // Instruction Memory Port
+    CacheBaseCtrl cache_ctrl (
+        .clk                      (clk),
+        .reset                    (reset),
+        .flush                    (flush),
+        .flush_done               (flush_done),
 
-    .imem_reqstream_val       (imem_reqstream_enq_val),
-    .imem_reqstream_rdy       (imem_reqstream_enq_rdy),
-    .imem_respstream_val      (imem_respstream_drop_val),
-    .imem_respstream_rdy      (imem_respstream_drop_rdy),
+        .memreq_val               (memreq_val),
+        .memreq_rdy               (memreq_rdy),
+        .memresp_val              (memresp_val),
+        .memresp_rdy              (memresp_rdy),
+        .cache_req_val            (cache_req_val),
+        .cache_req_rdy            (cache_req_rdy),
+        .cache_resp_val           (cache_resp_val),
+        .cache_resp_rdy           (cache_resp_rdy),
+        
+        .memreq_en                (memreq_en),
+        .data_array_w_en          (data_array_w_en),
+        .data_array_r_en          (data_array_r_en),
+        .flush_counter            (flush_counter),
+        .data_array_write_mux_sel (data_array_write_mux_sel),
+        .tag_array_w_en           (tag_array_w_en),
+        .tag_array_r_en           (tag_array_r_en),
+        .received_mem_resp_num    (received_mem_resp_num),
 
-    // Data Memory Port
+        .tag_array_match          (tag_array_match),
+        .index                    (index),
+        .read                     (read)
+    );
 
-    .dmem_reqstream_val       (dmem_reqstream_enq_val),
-    .dmem_reqstream_rdy       (dmem_reqstream_rdy),
-    .dmem_respstream_val      (dmem_respstream_val),
-    .dmem_respstream_rdy      (dmem_respstream_rdy),
-    .dmem_reqstream_type      (dmem_reqstream_type_enq),
-
-    .*
-  );
-
+    CacheBaseDpath cache_base_dpath(
+        .clk                      (clk),
+        .reset                    (reset),
+        .memreq_rdy               (dmem_reqstream_rdy),
+        .mem_req_msg              (mem_req_msg),
+        .cache_resp_msg           (cache_resp_msg),
+        .memresp_msg              (memresp_msg),
+        .cache_req_msg            (cache_req_msg),
+        .data_array_w_en          (data_array_w_en),
+        .data_array_r_en          (data_array_r_en),
+        .data_array_write_mux_sel (data_array_write_mux_sel),
+        .tag_array_w_en           (tag_array_w_en),
+        .received_mem_resp_num    (received_mem_resp_num),
+        .tag_array_match          (tag_array_match),
+        .index                    (index),
+        .read                     (read)
+    );
 
 
 endmodule
