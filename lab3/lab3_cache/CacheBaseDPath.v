@@ -13,6 +13,8 @@ module CacheBaseDpath (
 
     //inputs to wrapper module
     output logic                        memreq_rdy,             // cache ready to receive request from proc
+    input logic                         cache_resp_rdy,         // cache ready to receive request from mem
+
     input mem_req_4B_t                  mem_req_msg,            // msg: proc -> cache
     input mem_resp_4B_t                 cache_resp_msg,         // msg: mem -> cache
 
