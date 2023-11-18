@@ -58,7 +58,7 @@ module CacheBaseCtrl (
   logic [num_lines-1:0]   dirty_bits;
   logic [num_lines-1:0]   valid_bits;
   logic                   flush_flag;
-  logic [dirty_size-1:0] flush_counter;
+  logic [dirty_size-1:0]  flush_counter;
    
 
 //todo all val rdy req resolve.
@@ -184,7 +184,7 @@ module CacheBaseCtrl (
           if (sent_mem_req_num < num_words_in_line && ((dirty_bits[flush_counter] && flush_flag) || !flush_flag)) begin 
             sent_mem_req_num              <= sent_mem_req_num + 1; 
           end
-          else if (flush_flag && flush_counter <= 31) begin //if line was evicted, go to the next line //believe should be num_lines -1
+          else if (flush_flag && flush_counter <= 31) begin //if line was evicted, go to the next line //believe should be num_lines -1 todo
             dirty_bits[flush_counter]     <= 0;
             flush_counter                 <= flush_counter + 1; 
           end
