@@ -32,7 +32,7 @@ module CacheBaseCtrl (
     output  logic                  data_array_write_mux_sel,
     output  logic                  tag_array_w_en,
     output  logic                  tag_array_r_en,
-    output  logic [3:0]            received_mem_resp_num, // number of responses from mem during refill (counter reaches 15 when line filled)
+    output  logic [4:0]            received_mem_resp_num, // number of responses from mem during refill (counter reaches 15 when line filled)
 
     output  logic [dirty_size-1:0] flush_counter,  
 
@@ -49,7 +49,7 @@ module CacheBaseCtrl (
   logic [1:0] current_state, next_state;
 
   // data or sram-realted sizes
-  localparam dirty_size         = 6;
+  localparam dirty_size         = 5;
   localparam num_lines          = 32;
   localparam index_bits         = 6;
   localparam num_words_in_line  = 16;
@@ -130,7 +130,8 @@ module CacheBaseCtrl (
         end 
       end 
       refill: begin 
-        if (received_mem_resp_num < num_words_in_line) begin 
+        //if (received_mem_resp_num <= num_words_in_line-1) begin
+	 if (received_mem_resp_num <= 15) begin 	 
           next_state = refill; 
         end 
         else begin 
@@ -184,7 +185,11 @@ module CacheBaseCtrl (
           if (sent_mem_req_num < num_words_in_line && ((dirty_bits[flush_counter] && flush_flag) || !flush_flag)) begin 
             sent_mem_req_num              <= sent_mem_req_num + 1; 
           end
+<<<<<<< HEAD
           else if (flush_flag && flush_counter <= 31) begin //if line was evicted, go to the next line //believe should be num_lines -1 todo
+=======
+          else if (flush_flag && flush_counter <= 5'h31) begin //if line was evicted, go to the next line //believe should be num_lines -1
+>>>>>>> c5769de60a486e748b5ee4ac68048d4e0b5ea02e
             dirty_bits[flush_counter]     <= 0;
             flush_counter                 <= flush_counter + 1; 
           end

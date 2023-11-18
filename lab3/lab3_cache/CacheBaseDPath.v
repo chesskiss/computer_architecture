@@ -26,7 +26,7 @@ module CacheBaseDpath (
     input logic                         data_array_r_en,
     input logic                         data_array_write_mux_sel,
     input logic                         tag_array_w_en,
-    input logic [3:0]                   received_mem_resp_num,  // number of responses from mem during refill (counter reaches 15 when line filled)
+    input logic [4:0]                   received_mem_resp_num,  // number of responses from mem during refill (counter reaches 15 when line filled)
 
     //dpath-ctrl signals              
     output logic                        tag_array_match,
@@ -91,7 +91,11 @@ assign b_offset           = cache_req_msg.addr[1:0];
 
 assign memresp_msg.type_  = cache_req_msg.type_;
 assign memresp_msg.opaque = cache_req_msg.opaque;
+<<<<<<< HEAD
 // assign memresp_msg.addr   = cache_req_msg.addr;
+=======
+//assign memresp_msg.addr   = cache_req_msg.addr;
+>>>>>>> c5769de60a486e748b5ee4ac68048d4e0b5ea02e
 assign memresp_msg.len    = cache_req_msg.len;
 
 vc_EnResetReg#(77) cache_req_addr_reg
