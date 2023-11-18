@@ -104,6 +104,7 @@ assign memresp_msg = cache_resp_msg;
         .clk                      (clk),
         .reset                    (reset),
         .memreq_rdy               (dmem_reqstream_rdy),
+        .cache_resp_rdy           (cache_resp_rdy),
         .mem_req_msg              (mem_req_msg),
         .cache_resp_msg           (cache_resp_msg),
         .memresp_msg              (memresp_msg),
