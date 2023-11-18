@@ -36,7 +36,7 @@ module CacheBaseCtrl (
     // Inputs of ctrl signals (outputs of cacheBaseDpath)
     input logic                    tag_array_match,
     input logic [index_bits-1:0]   index,           // number of line we're looking at
-    input logic                     
+    input logic                    read 
 ); //TODO: Next lab we'll brief each other after each commit, and sit together to DRAW the diagram and understand ALL signals. Only then we start to work.
 
   //state variables
@@ -139,8 +139,8 @@ module CacheBaseCtrl (
   always_ff @(posedge clk) begin
     if (reset) begin
       current_state                       <= tag_check;
-      valid_bits                          <= 32'b0; //todo replace with lcoal param num_lines
-      dirty_bits                          <= 32'b0; //todo same
+      valid_bits                          <= num_lines'b0; //todo replace with lcoal param num_lines
+      dirty_bits                          <= num_lines'b0; //todo same
       flush_counter                       <= 0; 
       sent_mem_req_num                    <= 0;
       received_mem_resp_num               <= 0;
