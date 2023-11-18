@@ -139,8 +139,8 @@ module CacheBaseCtrl (
   always_ff @(posedge clk) begin
     if (reset) begin
       current_state                       <= tag_check;
-      valid_bits                          <= num_lines'b0; //todo replace with lcoal param num_lines
-      dirty_bits                          <= num_lines'b0; //todo same
+      valid_bits                          <= 32'b0; //todo replace with lcoal param num_lines
+      dirty_bits                          <= 32'b0; //todo same
       flush_counter                       <= 0; 
       sent_mem_req_num                    <= 0;
       received_mem_resp_num               <= 0;
