@@ -54,13 +54,6 @@ assign memresp_msg = cache_resp_msg;
 //Fix the signal declaration types todo
 //Seems a bunch of control signals not used by datapath 
 
-  logic clk, reset, flush, flush_done;
-  logic memreq_val, memreq_rdy;
-  logic memresp_val, memresp_rdy;
-
-
-  logic cache_req_val, cache_req_rdy;
-  logic cache_resp_val, cache_resp_rdy;
   logic memreq_en, data_array_w_en, data_array_r_en;
   logic [2:0] flush_counter;
   logic data_array_write_mux_sel, tag_array_w_en, tag_array_r_en;
