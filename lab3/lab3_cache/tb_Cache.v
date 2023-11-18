@@ -379,9 +379,4 @@ initial begin
   end
 
 
-<<<<<<< HEAD
-endmodule
-
-=======
 endmodule // top
->>>>>>> e26b9925eab398cd8b5605ffd297d2c8c1b9c309
