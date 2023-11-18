@@ -3,8 +3,6 @@
 
 `include "vc/regs.v"
 
-
-//work pls
 module CacheBaseCtrl (
     // Outer system signals
     input   logic                   clk,
@@ -169,6 +167,7 @@ module CacheBaseCtrl (
         memreq_rdy                        <= tag_array_match; //ready to receive requests
         memresp_val                       <= tag_array_match;        
       end  
+
       if (current_state == evict) begin 
         memreq_rdy                        <= 0;
         memresp_val                       <= 0;
@@ -181,16 +180,17 @@ module CacheBaseCtrl (
           if (sent_mem_req_num < num_words_in_line && ((dirty_bits[flush_counter] && flush_flag) || !flush_flag)) begin 
             sent_mem_req_num              <= sent_mem_req_num + 1; 
           end
-          else if (flush_flag && flush_counter < num_lines) begin //if line was evicted, go to the next line 
+          else if (flush_flag && flush_counter <= 31) begin //if line was evicted, go to the next line //believe should be num_lines -1
             dirty_bits[flush_counter]     <= 0;
             flush_counter                 <= flush_counter + 1; 
           end
-          else if (flush) begin // finished evicting all dirty bits
+          else if (flush_flag) begin // finished evicting all dirty bits
             flush_done                    <= 1;
             flush_flag                    <= 0;
-          end 
+          end
         end
-      end 
+      end
+
       if (current_state == refill) begin 
         memreq_rdy                        <= 0; // even when we go bag to tag check we can't accept new proc. req before responding
         cache_resp_rdy                    <= 1;
@@ -205,7 +205,8 @@ module CacheBaseCtrl (
           received_mem_resp_num           <= num_words_in_line; // if we write then 1 cycle is enough since we're writing 1 word.
         end 
           memresp_val                     <= next_state == tag_check; //we'll give a valid respone to proc. after refill
-      end 
+        end 
+        
         current_state                     <= next_state; 
     end 
   end
