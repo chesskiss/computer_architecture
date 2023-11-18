@@ -29,7 +29,7 @@ module CacheBaseCtrl (
     output  logic                  memreq_en,
     output  logic                  data_array_w_en,
     output  logic                  data_array_r_en,
-    output  logic [dirty_size-1:0] flush_counter,  
+    //output  logic [dirty_size-1:0] flush_counter,  
     output  logic                  data_array_write_mux_sel,
     output  logic                  tag_array_w_en,
     output  logic                  tag_array_r_en,
@@ -48,15 +48,17 @@ module CacheBaseCtrl (
   logic [1:0] current_state, next_state;
 
   // data or sram-realted sizes
-  localparam dirty_size         = 3;
+  localparam dirty_size         = 6;
   localparam num_lines          = 32;
   localparam index_bits         = 5;
   localparam num_words_in_line  = 16;
 
-  logic [3:0]             sent_mem_req_num;     // number of requests to mem during evict (counter reaches 15 when line evicted)
+  logic [4:0]             sent_mem_req_num;     // number of requests to mem during evict (counter reaches 15 when line evicted)
   logic [num_lines-1:0]   dirty_bits;
   logic [num_lines-1:0]   valid_bits;
   logic                   flush_flag;
+  logic [dirty_size-1:0] flush_counter;
+   
 //todo all val rdy req resolve.
 // ==================================== Data Path signals =================================================
  // pins that are being activated

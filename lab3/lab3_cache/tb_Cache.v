@@ -379,4 +379,4 @@ initial begin
   end
 
 
-endmodule
+endmodule // top
