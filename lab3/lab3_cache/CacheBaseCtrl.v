@@ -3,7 +3,10 @@
 
 `include "vc/regs.v"
 
-module CacheBaseCtrl (
+module CacheBaseCtrl 
+  #(
+    parameter index_bits=6)
+   (
     // Outer system signals
     input   logic                   clk,
     input   logic                   reset,
@@ -34,7 +37,7 @@ module CacheBaseCtrl (
     output  logic                  tag_array_r_en,
     output  logic [4:0]            received_mem_resp_num, // number of responses from mem during refill (counter reaches 15 when line filled)
 
-    output  logic [dirty_size-1:0] flush_counter,  
+    //output  logic [dirty_size-1:0] flush_counter,  
 
     // Inputs of ctrl signals (outputs of cacheBaseDpath)
     input logic                    tag_array_match,
@@ -51,7 +54,7 @@ module CacheBaseCtrl (
   // data or sram-realted sizes
   localparam dirty_size         = 5;
   localparam num_lines          = 32;
-  localparam index_bits         = 6;
+  //localparam index_bits         = 6;
   localparam num_words_in_line  = 16;
 
   logic [4:0]             sent_mem_req_num;     // number of requests to mem during evict (counter reaches 15 when line evicted)
