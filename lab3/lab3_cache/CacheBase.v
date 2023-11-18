@@ -46,8 +46,12 @@ module lab3_cache_CacheBase
 // assign memresp_val = cache_resp_val;
 // assign cache_resp_rdy = memresp_rdy;
 // assign memresp_msg = cache_resp_msg;
-// todo replace these assign signals
+// todo delete these assign signals
 
+localparam index_bits         = 5;
+localparam dirty_size         = 5;
+
+  // Internal signals
   logic memreq_en, data_array_w_en, data_array_r_en;
   logic [dirty_size-1:0] flush_counter;
   logic data_array_write_mux_sel, tag_array_w_en, tag_array_r_en;
@@ -56,8 +60,10 @@ module lab3_cache_CacheBase
   logic [index_bits-1:0] index;
   logic read;
 
-  localparam index_bits         = 5;
-  localparam dirty_size         = 3;
+ 
+
+
+
 
 // todo - fix and add dpath
     CacheBaseCtrl cache_ctrl (
@@ -113,4 +119,3 @@ endmodule
 
 
 `endif /* LAB3_CACHE_CACHE_BASE_V */
-
