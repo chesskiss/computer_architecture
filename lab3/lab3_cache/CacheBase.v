@@ -65,7 +65,7 @@ localparam dirty_size         = 5;
 // todo - fix and add dpath
     CacheBaseCtrl 
       #(
-	.index_bits(6)
+	.index_bits(5)
 	)
    cache_ctrl (
         .clk                      (clk),

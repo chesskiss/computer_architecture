@@ -5,7 +5,7 @@
 
 module CacheBaseCtrl 
   #(
-    parameter index_bits=6)
+    parameter index_bits=5)
    (
     // Outer system signals
     input   logic                   clk,

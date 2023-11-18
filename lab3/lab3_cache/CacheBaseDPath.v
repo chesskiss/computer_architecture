@@ -7,7 +7,10 @@
 `include "vc/regs.v"
 `include "vc/srams.v"
 
-module CacheBaseDpath (
+module CacheBaseDpath
+  # (
+     parameter index_bits=5)
+ (
     input logic                         clk, 
     input logic                         reset,
 
@@ -36,7 +39,6 @@ module CacheBaseDpath (
 
 localparam tag_bits           = 21;             // # of tag bits
 localparam block_size         = 64;             // in bytes
-localparam index_bits         = 5;              // # index bits
 localparam word_offset_bits   = 4;              // # word offset bits
 localparam byte_offset_bits   = 2;              // # word offset bits
 
