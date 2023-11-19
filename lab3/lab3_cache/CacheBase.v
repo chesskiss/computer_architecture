@@ -55,7 +55,7 @@ localparam dirty_size         = 5;
   logic memreq_en, data_array_w_en, data_array_r_en;
   // logic [dirty_size-1:0] flush_counter;
   logic data_array_write_mux_sel, tag_array_w_en, tag_array_r_en;
-  logic [3:0] received_mem_resp_num;
+  logic [4:0] received_mem_resp_num;
   logic tag_array_match;
   logic [index_bits-1:0] index;
   logic read;
@@ -63,7 +63,11 @@ localparam dirty_size         = 5;
  
 
 // todo - fix and add dpath
-    CacheBaseCtrl cache_ctrl (
+    CacheBaseCtrl 
+      #(
+	.index_bits(5)
+	)
+   cache_ctrl (
         .clk                      (clk),
         .reset                    (reset),
         .flush                    (flush),

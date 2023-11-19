@@ -7,7 +7,10 @@
 `include "vc/regs.v"
 `include "vc/srams.v"
 
-module CacheBaseDpath (
+module CacheBaseDpath
+  # (
+     parameter index_bits=5)
+ (
     input logic                         clk, 
     input logic                         reset,
 
@@ -26,7 +29,7 @@ module CacheBaseDpath (
     input logic                         data_array_r_en,
     input logic                         data_array_write_mux_sel,
     input logic                         tag_array_w_en,
-    input logic [3:0]                   received_mem_resp_num,  // number of responses from mem during refill (counter reaches 15 when line filled)
+    input logic [4:0]                   received_mem_resp_num,  // number of responses from mem during refill (counter reaches 15 when line filled)
 
     //dpath-ctrl signals              
     output logic                        tag_array_match,
@@ -36,7 +39,6 @@ module CacheBaseDpath (
 
 localparam tag_bits           = 21;             // # of tag bits
 localparam block_size         = 64;             // in bytes
-localparam index_bits         = 5;              // # index bits
 localparam word_offset_bits   = 4;              // # word offset bits
 localparam byte_offset_bits   = 2;              // # word offset bits
 
@@ -91,7 +93,7 @@ assign b_offset           = cache_req_msg.addr[1:0];
 
 assign memresp_msg.type_  = cache_req_msg.type_;
 assign memresp_msg.opaque = cache_req_msg.opaque;
-assign memresp_msg.addr   = cache_req_msg.addr;
+//assign memresp_msg.addr   = cache_req_msg.addr;
 assign memresp_msg.len    = cache_req_msg.len;
 
 vc_EnResetReg#(77) cache_req_addr_reg

@@ -21,7 +21,7 @@ nop
 nop
 nop
 nop
-csrw proc2mngr, x3 > 9
+csrw proc2mngr, x1 > 5
 nop
 nop
 nop
