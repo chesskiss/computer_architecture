@@ -46,7 +46,7 @@ module lab3_cache_CacheBase
 // assign memresp_val = cache_resp_val;
 // assign cache_resp_rdy = memresp_rdy;
 // assign memresp_msg = cache_resp_msg;
-// todo replace these assign signals
+// todo replace these assign signals //
 
 localparam index_bits         = 5;
 localparam dirty_size         = 5;

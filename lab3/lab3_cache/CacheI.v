@@ -62,7 +62,7 @@ module lab3_cache_CacheI
 logic flush_done1, flush_done2;
 assign  flush_done = flush_done1 & flush_done2;
 
-lab3_cache_CacheBypass
+lab3_cache_CacheBypass //CacheBase
 icache (
   .clk(clk),
   .reset(reset),  

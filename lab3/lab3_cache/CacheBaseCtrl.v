@@ -59,7 +59,7 @@ module CacheBaseCtrl
   logic [num_lines-1:0]   dirty_bits;
   logic [num_lines-1:0]   valid_bits;
   logic                   flush_flag;
-  logic [dirty_size-1:0] flush_counter;
+  logic [dirty_size-1:0]  flush_counter;
    
 
 //todo all val rdy req resolve.
