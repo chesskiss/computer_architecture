@@ -93,11 +93,8 @@ assign b_offset           = cache_req_msg.addr[1:0];
 
 assign memresp_msg.type_  = cache_req_msg.type_;
 assign memresp_msg.opaque = cache_req_msg.opaque;
-<<<<<<< HEAD
-// assign memresp_msg.addr   = cache_req_msg.addr;
-=======
+
 //assign memresp_msg.addr   = cache_req_msg.addr;
->>>>>>> c5769de60a486e748b5ee4ac68048d4e0b5ea02e
 assign memresp_msg.len    = cache_req_msg.len;
 
 vc_EnResetReg#(77) cache_req_addr_reg
