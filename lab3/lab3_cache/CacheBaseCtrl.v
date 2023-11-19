@@ -188,11 +188,7 @@ module CacheBaseCtrl
           if (sent_mem_req_num < num_words_in_line && ((dirty_bits[flush_counter] && flush_flag) || !flush_flag)) begin 
             sent_mem_req_num              <= sent_mem_req_num + 1; 
           end
-<<<<<<< HEAD
-          else if (flush_flag && flush_counter <= 31) begin //if line was evicted, go to the next line //believe should be num_lines -1 todo
-=======
           else if (flush_flag && flush_counter <= 5'h31) begin //if line was evicted, go to the next line //believe should be num_lines -1
->>>>>>> c5769de60a486e748b5ee4ac68048d4e0b5ea02e
             dirty_bits[flush_counter]     <= 0;
             flush_counter                 <= flush_counter + 1; 
           end
