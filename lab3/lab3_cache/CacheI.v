@@ -7,7 +7,7 @@
 
 `include "vc/mem-msgs.v"
 `include "CacheBypass.v"
-//`include "CacheBase.v"
+`include "CacheBase.v"
 
 module lab3_cache_CacheI
 (
@@ -62,7 +62,7 @@ module lab3_cache_CacheI
 logic flush_done1, flush_done2;
 assign  flush_done = flush_done1 & flush_done2;
 
-lab3_cache_CacheBypass //CacheBase
+lab3_cache_CacheBase
 icache (
   .clk(clk),
   .reset(reset),  

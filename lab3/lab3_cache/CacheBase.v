@@ -39,15 +39,6 @@ module lab3_cache_CacheBase
   output logic                     flush_done
 );
 
-// assign cache_req_val = memreq_val;
-// assign memreq_rdy = cache_req_rdy;
-// assign cache_req_msg = memreq_msg;
-
-// assign memresp_val = cache_resp_val;
-// assign cache_resp_rdy = memresp_rdy;
-// assign memresp_msg = cache_resp_msg;
-// todo replace these assign signals //
-
 localparam index_bits         = 5;
 localparam dirty_size         = 5;
 
